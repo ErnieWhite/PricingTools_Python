@@ -52,11 +52,16 @@ class ConverterFrame(ttk.Frame):
         self.gross_profit_formula_button.grid(column=2, row=3)
 
 
+class App(tk.Tk):
+    def __init__(self):
+        super().__init__()
+
+        self.title("Formula Converter")
+
+
 if __name__ == '__main__':
-    root = tk.Tk()
+    app = App()
 
-    root.title("Formula Converter")
+    frame = ConverterFrame(app)
 
-    frame = ConverterFrame(root)
-
-    root.mainloop()
+    app.mainloop()
