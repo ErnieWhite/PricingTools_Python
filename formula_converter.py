@@ -50,7 +50,6 @@ class ConverterFrame(ttk.Frame):
         self.markup_formula_button = ttk.Button(self, text="Copy")
         self.gross_profit_formula_button = ttk.Button(self, text="Copy")
 
-
         self.place_widgets()
         self.setup_bindings()
 
@@ -118,9 +117,16 @@ class ConverterFrame(ttk.Frame):
         self.gross_profit_string_var.set(utility.find_gross_profit_formula(self.multiplier))
 
     @staticmethod
-    def validate(self, value):
+    def validate(self, value: str) -> bool:
+        value = value.upper()
+        try:
+            if value[0] in ['*', 'X', 'D']:
+                return float(value[1:]) == float(value[1:])
+            if value[0] in ['-', '+']:
+                return float(value) == float(value)
+        except (ZeroDivisionError, ValueError):
+            return False
         print(f'validate: {value}')
-        return True
 
     @staticmethod
     def on_invalid(self):
