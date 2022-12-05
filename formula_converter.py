@@ -85,14 +85,53 @@ class ConverterFrame(ttk.Frame):
 
         :return:
         """
-        self.current_formula_label.bind('<Return>', self.handle_formula_change_event)
-
+        self.current_formula_entry.bind('<Return>', self.handle_formula_change_event)
 
     def handle_formula_change_event(self, event):
         value = event.widget.get()
         self.multiplier = utility.calculate_multiplier(value)
+        self.update_formulas()
 
-        print(value, self.multiplier)
+    def update_formulas(self):
+        self.update_multiplier_formula()
+        self.update_discount_formula()
+        self.update_markup_formula()
+        self.update_gross_profit_formula()
+
+    def update_multiplier_formula(self):
+        self.find_multiplier_formula()
+
+    def update_discount_formula(self):
+        pass
+
+    def update_markup_formula(self):
+        pass
+
+    def update_gross_profit_formula(self):
+        pass
+
+    def find_multiplier_formula(self) -> str:
+        if self.multiplier == 0:
+            return 'Invalid Formula'
+        else:
+            return f'*{self.multiplier:.6}'
+
+    def find_markup_formula(self) -> str:
+        if self.multiplier == 0:
+            return 'Invalid Formula'
+        else:
+            return f'D{1 / self.multiplier:.6}'
+
+    @staticmethod
+    def find_discount_formula(multiplier: float) -> str:
+        return f'{(multiplier - 1) * 100:+.6}'
+
+    @staticmethod
+    def find_gross_profit_formula(multiplier: float) -> str:
+        if multiplier == 0:
+            return 'Invalid Formula'
+        else:
+            return f'GP{(1 - 1 / multiplier) * 100:.6}'
 
     @staticmethod
     def validate(self, value):
