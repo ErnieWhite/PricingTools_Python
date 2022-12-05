@@ -3,6 +3,7 @@
 """
 import tkinter as tk
 from tkinter import ttk
+import re
 
 import utility
 
@@ -30,18 +31,25 @@ class ConverterFrame(ttk.Frame):
         self.markup_formula_label = ttk.Label(self, text='Markup')
         self.gross_profit_formula_label = ttk.Label(self, text='Gross Profit')
 
+        # create the StringVars
+        self.multiplier_string_var = tk.StringVar()
+        self.discount_string_var = tk.StringVar()
+        self.markup_string_var = tk.StringVar()
+        self.gross_profit_string_var = tk.StringVar()
+
         # create the entries
         self.current_formula_entry = ttk.Entry(self)
-        self.multiplier_formula_entry = ttk.Entry(self)
-        self.discount_formula_entry = ttk.Entry(self)
-        self.markup_formula_entry = ttk.Entry(self)
-        self.gross_profit_formula_entry = ttk.Entry(self)
+        self.multiplier_formula_entry = ttk.Entry(self, textvariable=self.multiplier_string_var)
+        self.discount_formula_entry = ttk.Entry(self, textvariable=self.discount_string_var)
+        self.markup_formula_entry = ttk.Entry(self, textvariable=self.markup_string_var)
+        self.gross_profit_formula_entry = ttk.Entry(self, textvariable=self.gross_profit_string_var)
 
         # create the copy buttons
         self.multiplier_formula_button = ttk.Button(self, text="Copy")
         self.discount_formula_button = ttk.Button(self, text="Copy")
         self.markup_formula_button = ttk.Button(self, text="Copy")
         self.gross_profit_formula_button = ttk.Button(self, text="Copy")
+
 
         self.place_widgets()
         self.setup_bindings()
@@ -85,14 +93,29 @@ class ConverterFrame(ttk.Frame):
 
         :return:
         """
-        self.current_formula_label.bind('<Return>', self.handle_formula_change_event)
-
+        self.current_formula_entry.bind('<Return>', self.handle_formula_change_event)
 
     def handle_formula_change_event(self, event):
         value = event.widget.get()
         self.multiplier = utility.calculate_multiplier(value)
+        self.update_multiplier()
+        self.update_discount()
+        self.update_markup()
+        self.update_gross_profit()
 
         print(value, self.multiplier)
+
+    def update_multiplier(self):
+        self.multiplier_string_var.set(utility.find_multiplier_formula(self.multiplier))
+
+    def update_discount(self):
+        self.discount_string_var.set(utility.find_discount_formula(self.multiplier))
+
+    def update_markup(self):
+        self.markup_string_var.set(utility.find_markup_formula(self.multiplier))
+
+    def update_gross_profit(self):
+        self.gross_profit_string_var.set(utility.find_gross_profit_formula(self.multiplier))
 
     @staticmethod
     def validate(self, value):

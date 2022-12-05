@@ -34,3 +34,20 @@ def calculate_multiplier(formula: str) -> float:
         return float(formula[1:])
 
     raise ValueError(f'{formula} is not a valid formula')
+
+
+def find_multiplier_formula(multiplier):
+
+    return f'*{multiplier:.6}'
+
+
+def find_markup_formula(multiplier):
+    return f'D{1/multiplier:.6}'
+
+
+def find_discount_formula(multiplier):
+    return f'{(multiplier - 1)*100:+.6}'
+
+
+def find_gross_profit_formula(multiplier):
+    return f'GP{(1-1/multiplier) * 100:.6}'
