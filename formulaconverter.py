@@ -53,8 +53,6 @@ class ConverterFrame(ttk.Frame):
         self.place_widgets()
         self.setup_bindings()
 
-        self.pack()
-
     def place_widgets(self):
         """
 
@@ -133,16 +131,10 @@ class ConverterFrame(ttk.Frame):
         print('on invalid')
 
 
-class App(tk.Tk):
-    def __init__(self):
-        super().__init__()
-
-        self.title("Formula Converter")
-
-
 if __name__ == '__main__':
-    app = App()
+    app = tk.Tk()
 
     frame = ConverterFrame(app)
+    frame.pack()
 
     app.mainloop()

@@ -51,3 +51,9 @@ def find_discount_formula(multiplier):
 
 def find_gross_profit_formula(multiplier):
     return f'GP{(1-1/multiplier) * 100:.6}'
+
+
+def valid_formula(formula):
+    if formula == '':
+        return True
+

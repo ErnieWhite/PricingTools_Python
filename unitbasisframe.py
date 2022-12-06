@@ -38,8 +38,6 @@ class UnitBasisFrame(ttk.Frame):
 
         self.gross_profit_formula_entry.grid(row=3, column=2, sticky='ew')
 
-        self.pack()
-
 
 if __name__ == '__main__':
     root = tk.Tk()
