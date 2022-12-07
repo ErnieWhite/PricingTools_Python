@@ -24,6 +24,12 @@ class UnitBasisFrame(ttk.Frame):
         self.markup_formula_entry = ttk.Entry(self)
         self.gross_profit_formula_entry = ttk.Entry(self)
 
+        self.multiplier_formula_copy_button = ttk.Button(self, text='Copy')
+        self.discount_formula_copy_button = ttk.Button(self, text='Copy')
+        self.markup_formula_copy_button = ttk.Button(self, text='Copy')
+        self.gross_profit_formula_copy_button = ttk.Button(self, text='Copy')
+
+
         self.unit_price_label.grid(row=0, column=0, sticky='w')
         self.unit_price_entry.grid(row=0, column=1, sticky='ew')
         self.multiplier_formula_entry.grid(row=0, column=2, sticky='ew')
@@ -40,8 +46,11 @@ class UnitBasisFrame(ttk.Frame):
 
 
 if __name__ == '__main__':
-    root = tk.Tk()
+    app = tk.Tk()
 
-    frame = UnitBasisFrame(root)
+    app.title('Find Formula')
 
-    root.mainloop()
+    frame = UnitBasisFrame(app)
+    frame.pack()
+
+    app.mainloop()

@@ -4,6 +4,7 @@
 import tkinter as tk
 from tkinter import ttk
 import re
+import pyperclip
 
 import utility
 
@@ -25,7 +26,7 @@ class ConverterFrame(ttk.Frame):
         self.separator = ttk.Separator(self, orient='horizontal')
 
         # create the labels
-        self.current_formula_label = ttk.Label(self, text='Current')
+        self.current_formula_label = ttk.Label(self, text='Formula')
         self.multiplier_formula_label = ttk.Label(self, text='Multiplier')
         self.discount_formula_label = ttk.Label(self, text='Discount')
         self.markup_formula_label = ttk.Label(self, text='Markup')
@@ -39,16 +40,16 @@ class ConverterFrame(ttk.Frame):
 
         # create the entries
         self.current_formula_entry = ttk.Entry(self)
-        self.multiplier_formula_entry = ttk.Entry(self, textvariable=self.multiplier_string_var)
-        self.discount_formula_entry = ttk.Entry(self, textvariable=self.discount_string_var)
-        self.markup_formula_entry = ttk.Entry(self, textvariable=self.markup_string_var)
-        self.gross_profit_formula_entry = ttk.Entry(self, textvariable=self.gross_profit_string_var)
+        self.multiplier_formula_entry = ttk.Entry(self, textvariable=self.multiplier_string_var, state='readonly')
+        self.discount_formula_entry = ttk.Entry(self, textvariable=self.discount_string_var, state='readonly')
+        self.markup_formula_entry = ttk.Entry(self, textvariable=self.markup_string_var, state='readonly')
+        self.gross_profit_formula_entry = ttk.Entry(self, textvariable=self.gross_profit_string_var, state='readonly')
 
         # create the copy buttons
-        self.multiplier_formula_button = ttk.Button(self, text="Copy")
-        self.discount_formula_button = ttk.Button(self, text="Copy")
-        self.markup_formula_button = ttk.Button(self, text="Copy")
-        self.gross_profit_formula_button = ttk.Button(self, text="Copy")
+        self.multiplier_formula_button = ttk.Button(self, text="Copy", command=self.copy_multiplier_formula)
+        self.discount_formula_button = ttk.Button(self, text="Copy", command=self.copy_discount_formula)
+        self.markup_formula_button = ttk.Button(self, text="Copy", command=self.copy_markup_formula)
+        self.gross_profit_formula_button = ttk.Button(self, text="Copy", command=self.copy_gross_profit_formula)
 
         self.place_widgets()
         self.setup_bindings()
@@ -114,6 +115,18 @@ class ConverterFrame(ttk.Frame):
     def update_gross_profit(self):
         self.gross_profit_string_var.set(utility.find_gross_profit_formula(self.multiplier))
 
+    def copy_multiplier_formula(self):
+        pyperclip.copy(self.multiplier_formula_entry.get())
+
+    def copy_discount_formula(self):
+        pyperclip.copy(self.discount_formula_entry.get())
+
+    def copy_markup_formula(self):
+        pyperclip.copy(self.markup_formula_entry.get())
+
+    def copy_gross_profit_formula(self):
+        pyperclip.copy(self.gross_profit_formula_entry.get())
+
     @staticmethod
     def validate(self, value: str) -> bool:
         value = value.upper()
@@ -133,6 +146,8 @@ class ConverterFrame(ttk.Frame):
 
 if __name__ == '__main__':
     app = tk.Tk()
+
+    app.title('Convert Formula')
 
     frame = ConverterFrame(app)
     frame.pack()

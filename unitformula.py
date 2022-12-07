@@ -10,6 +10,7 @@ class UnitFormulaFrame(ttk.Frame):
         self.unit_price_label = ttk.Label(self, text='Unit Price')
         self.formula_label = ttk.Label(self, text='Formula')
         self.calculated_basis_label = ttk.Label(self, text='Basis Value')
+        self.copy_button = ttk.Button(self, text='Copy')
 
         self.unit_price_entry = ttk.Entry(self)
         self.formula_entry = ttk.Entry(self)
@@ -23,12 +24,15 @@ class UnitFormulaFrame(ttk.Frame):
 
         self.calculated_basis_label.grid(row=2, column=0, sticky='w')
         self.calculated_basis_entry.grid(row=2, column=1, sticky='we')
+        self.copy_button.grid(row=3, column=1, sticky='we')
 
 
 if __name__ == '__main__':
-    root = tk.Tk()
+    app = tk.Tk()
 
-    frame = UnitFormulaFrame(root)
+    app.title('Find Basis Value')
+
+    frame = UnitFormulaFrame(app)
     frame.pack()
 
-    root.mainloop()
+    app.mainloop()
