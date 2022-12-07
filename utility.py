@@ -37,7 +37,6 @@ def calculate_multiplier(formula: str) -> float:
 
 
 def find_multiplier_formula(multiplier):
-
     return f'*{multiplier:.6}'
 
 
@@ -50,10 +49,30 @@ def find_discount_formula(multiplier):
 
 
 def find_gross_profit_formula(multiplier):
-    return f'GP{(1-1/multiplier) * 100:.6}'
+    # was having problems with different values from the f-string and rounding the number
+    numeric_part = float(f'{(1-1/multiplier) * 100:.6}')
+    return f'GP{numeric_part:.6}' if numeric_part < 100 else ''
 
 
 def valid_formula(formula):
+    if formula is None:
+        return False
+    formula = formula.upper()
     if formula == '':
         return True
-
+    if formula[0] in ['*', 'X', 'D']:
+        try:
+            return True if float(formula[1:]) != 0 else False
+        except ValueError:
+            return False
+    if formula[0] in ['-', '+']:
+        try:
+            return True if float(formula[1:]) != 0 else False
+        except ValueError:
+            return False
+    if formula.startswith('GP'):
+        try:
+            return True if (float(formula[2:]) != 0) and (float(formula[2:]) < 100) else False
+        except ValueError:
+            return False
+    return False

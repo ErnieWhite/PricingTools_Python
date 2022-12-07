@@ -29,7 +29,6 @@ class UnitBasisFrame(ttk.Frame):
         self.markup_formula_copy_button = ttk.Button(self, text='Copy')
         self.gross_profit_formula_copy_button = ttk.Button(self, text='Copy')
 
-
         self.unit_price_label.grid(row=0, column=0, sticky='w')
         self.unit_price_entry.grid(row=0, column=1, sticky='ew')
         self.multiplier_formula_entry.grid(row=0, column=2, sticky='ew')
