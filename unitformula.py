@@ -78,7 +78,7 @@ class UnitFormulaFrame(ttk.Frame):
             return True
         return False
 
-    def update_basis_price(self, var, index, mode):
+    def update_basis_price(self, *_):
         print('update basis price')
         if not utility.valid_formula(self.formula_var.get()):
             self.clear_basis()
