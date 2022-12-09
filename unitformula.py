@@ -54,7 +54,8 @@ class UnitFormulaFrame(ttk.Frame):
         self.unit_price_var.trace('w', self.update_basis_price)
         self.formula_var.trace('w', self.update_basis_price)
 
-    def validate_float(self, value):
+    @staticmethod
+    def validate_float(value):
         if value == '':
             return True
         try:
@@ -63,16 +64,17 @@ class UnitFormulaFrame(ttk.Frame):
         except ValueError:
             return False
 
-    def validate_formula(self, value):
+    @staticmethod
+    def validate_formula(value):
         print(f'validate: formula {value}')
         if value == '':
             return True
         value = value.upper()
-        if re.search(r'^[\*,X,D][-,\+]?\d*\.?\d*$', value):
+        if re.search(r'^[*XD][-+]?\d*\.?\d*$', value):
             return True
-        if re.search(r'^[-,\+]\d*\.?\d*$', value):
+        if re.search(r'^[-+]\d*\.?\d*$', value):
             return True
-        if value == 'G' or re.search(r'^GP[-,\+]?\d*\.?\d*$', value):
+        if value == 'G' or re.search(r'^GP[-+]?\d*\.?\d*$', value):
             return True
         return False
 

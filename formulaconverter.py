@@ -105,7 +105,7 @@ class ConverterFrame(ttk.Frame):
         # self.current_formula_entry.bind('<Return>', self.handle_formula_change_event)
         self.formula_string_var.trace('w', self.handle_formula_change_event)
 
-    def handle_formula_change_event(self, var, index, mode):
+    def handle_formula_change_event(self, *_):
         value = self.formula_string_var.get()
         value = value.upper()
 
@@ -119,14 +119,11 @@ class ConverterFrame(ttk.Frame):
         else:
             self.clear_calculated_formulas()
 
-
     def clear_calculated_formulas(self):
         self.multiplier_string_var.set('')
         self.discount_string_var.set('')
         self.markup_string_var.set('')
         self.gross_profit_string_var.set('')
-
-
 
     def update_multiplier(self):
         self.multiplier_string_var.set(utility.find_multiplier_formula(self.multiplier))
@@ -158,14 +155,13 @@ class ConverterFrame(ttk.Frame):
         if value == '':
             return True
         value = value.upper()
-        if re.search(r'^[\*,X,D][-,\+]?\d*\.?\d*$', value):
+        if re.search(r'^[*XD][-,+]?\d*\.?\d*$', value):
             return True
-        if re.search(r'^[-,\+]?\d*\.?\d*$', value):
+        if re.search(r'^[-+]\d*\.?\d*$', value):
             return True
-        if value == 'G' or re.search(r'^GP[-,\+]?\d*\.?\d*$', value):
+        if value == 'G' or re.search(r'^GP[-+]?\d*\.?\d*$', value):
             return True
         return False
-
 
     @staticmethod
     def on_invalid():
