@@ -18,7 +18,7 @@ class App(tk.Tk):
         menubar = tk.Menu()
         self.config(menu=menubar)
 
-        view_menu = tk.Menu(menubar)
+        view_menu = tk.Menu(menubar, tearoff=False)
         view_menu.add_command(
             label='Unit Formula',
             command=self.load_unit_formula_frame,

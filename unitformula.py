@@ -23,10 +23,22 @@ class UnitFormulaFrame(ttk.Frame):
         self.unit_price_label = ttk.Label(self, text='Unit Price')
         self.formula_label = ttk.Label(self, text='Formula')
         self.calculated_basis_label = ttk.Label(self, text='Basis Value')
-        self.copy_button = ttk.Button(self, text='Copy')
+        self.copy_button = ttk.Button(self, text='Copy', command=self.copy_basis_price)
 
-        self.unit_price_entry = ttk.Entry(self, textvariable=self.unit_price_var)
-        self.formula_entry = ttk.Entry(self, textvariable=self.formula_var)
+        self.unit_price_entry = ttk.Entry(
+            self,
+            textvariable=self.unit_price_var,
+            validate='key',
+            validatecommand=float_vcmd,
+            invalidcommand=ivcmd,
+        )
+        self.formula_entry = ttk.Entry(
+            self,
+            textvariable=self.formula_var,
+            validate='key',
+            validatecommand=formula_vcmd,
+            invalidcommand=ivcmd,
+        )
         self.calculated_basis_entry = ttk.Entry(self, state='readonly', textvariable=self.basis_price_var)
 
         self.unit_price_label.grid(row=0, column=0, sticky='w')
@@ -39,6 +51,9 @@ class UnitFormulaFrame(ttk.Frame):
         self.calculated_basis_entry.grid(row=2, column=1, sticky='we')
         self.copy_button.grid(row=3, column=1, sticky='we')
 
+        self.unit_price_var.trace('w', self.update_basis_price)
+        self.formula_var.trace('w', self.update_basis_price)
+
     def validate_float(self, value):
         if value == '':
             return True
@@ -49,23 +64,40 @@ class UnitFormulaFrame(ttk.Frame):
             return False
 
     def validate_formula(self, value):
-        print('validate')
+        print(f'validate: formula {value}')
         if value == '':
             return True
         value = value.upper()
         if re.search(r'^[\*,X,D][-,\+]?\d*\.?\d*$', value):
             return True
-        if re.search(r'^[-,\+]?\d*\.?\d*$', value):
+        if re.search(r'^[-,\+]\d*\.?\d*$', value):
             return True
         if value == 'G' or re.search(r'^GP[-,\+]?\d*\.?\d*$', value):
             return True
         return False
 
-    def update_basis_price(self):
-        basis_price = self.unit_price_var.get * self.muliplier
+    def update_basis_price(self, var, index, mode):
+        print('update basis price')
+        if not utility.valid_formula(self.formula_var.get()):
+            self.clear_basis()
+            return
+        if self.unit_price_var.get() == '' or self.formula_var.get() == '':
+            self.clear_basis()
+            return
+        self.multiplier = utility.calculate_multiplier(self.formula_var.get())
+        if self.multiplier == 0:
+            self.clear_basis()
+            return
+        self.basis_price_var.set(str(float(self.unit_price_var.get()) / self.multiplier))
+
+    def clear_basis(self):
+        self.basis_price_var.set('')
 
     def on_invalid(self):
         pass
+
+    def copy_basis_price(self):
+        pyperclip.copy(self.basis_price_var.get())
 
 
 if __name__ == '__main__':
