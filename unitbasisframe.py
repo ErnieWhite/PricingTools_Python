@@ -78,6 +78,7 @@ class UnitBasisFrame(ttk.Frame):
         self.unit_price_var.trace('w', self.update_formulas)
         self.basis_value_var.trace('w', self.update_formulas)
 
+
     def update_formulas(self, var, index, mode):
         if not self.unit_price_var.get() or not self.basis_value_var.get():
             self.clear_formulas()

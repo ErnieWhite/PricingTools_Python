@@ -19,6 +19,7 @@ class UnitFormulaFrame(ttk.Frame):
         self.formula_var = tk.StringVar()
         self.basis_price_var = tk.StringVar()
 
+
         # create the widgets
         self.unit_price_label = ttk.Label(self, text='Unit Price')
         self.formula_label = ttk.Label(self, text='Formula')

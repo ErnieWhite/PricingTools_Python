@@ -6,6 +6,7 @@ def calculate_multiplier(formula: str) -> float:
     :return:
     :raises ValueError: when the formula cannot be converted into a multiplier
     """
+
     # if the formula is left blank it defaults to *1
     if formula == '':
         formula = '*1'
