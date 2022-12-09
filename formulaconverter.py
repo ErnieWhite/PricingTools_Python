@@ -109,7 +109,6 @@ class ConverterFrame(ttk.Frame):
         value = self.formula_string_var.get()
         value = value.upper()
 
-
         print(value, utility.valid_formula(value))
         if utility.valid_formula(value):
             self.multiplier = utility.calculate_multiplier(value)

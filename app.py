@@ -15,7 +15,6 @@ class App(tk.Tk):
         self.unit_basis_frame = unitbasisframe.UnitBasisFrame(self)
         self.formula_converter_frame = formulaconverter.ConverterFrame(self)
 
-
         menubar = tk.Menu()
         self.config(menu=menubar)
 
