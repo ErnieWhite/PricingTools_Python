@@ -5,7 +5,7 @@ import pyperclip
 import re
 
 
-class UnitFormulaFrame(ttk.Frame):
+class FindBasisValueFrame(ttk.Frame):
     def __init__(self, master, **kwargs):
         super().__init__(master=master, **kwargs)
 
@@ -51,8 +51,8 @@ class UnitFormulaFrame(ttk.Frame):
         self.calculated_basis_entry.grid(row=2, column=1, sticky='we')
         self.copy_button.grid(row=3, column=1, sticky='we')
 
-        self.unit_price_var.trace('w', self.update_basis_price)
-        self.formula_var.trace('w', self.update_basis_price)
+        self.unit_price_var.trace_add('write', self.update_basis_price)
+        self.formula_var.trace_add('write', self.update_basis_price)
 
     @staticmethod
     def validate_float(value):
@@ -78,8 +78,9 @@ class UnitFormulaFrame(ttk.Frame):
             return True
         return False
 
-    def update_basis_price(self, *_):
+    def update_basis_price(self, *args):
         print('update basis price')
+        self.formula_var.set(self.formula_var.get().upper())
         if not utility.valid_formula(self.formula_var.get()):
             self.clear_basis()
             return
@@ -107,7 +108,7 @@ if __name__ == '__main__':
 
     app.title('Find Basis Value')
 
-    frame = UnitFormulaFrame(app)
+    frame = FindBasisValueFrame(app)
     frame.pack()
 
     app.mainloop()

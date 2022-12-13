@@ -1,8 +1,8 @@
 import tkinter as tk
 
-import unitformula
-import formulaconverter
-import unitbasisframe
+import findbasisvalueframe
+import formulaconverterframe
+import findformulasframe
 
 
 class App(tk.Tk):
@@ -11,9 +11,9 @@ class App(tk.Tk):
 
         self.current_frame = None
 
-        self.unit_formula_frame = unitformula.UnitFormulaFrame(self)
-        self.unit_basis_frame = unitbasisframe.UnitBasisFrame(self)
-        self.formula_converter_frame = formulaconverter.ConverterFrame(self)
+        self.find_basis_value_frame = findbasisvalueframe.FindBasisValueFrame(self)
+        self.find_formulas_frame = findformulasframe.FindFormulaFrame(self)
+        self.formula_converter_frame = formulaconverterframe.FormulaConverterFrame(self)
 
         menubar = tk.Menu()
         self.config(menu=menubar)
@@ -21,11 +21,11 @@ class App(tk.Tk):
         view_menu = tk.Menu(menubar, tearoff=False)
         view_menu.add_command(
             label='Unit Formula',
-            command=self.load_unit_formula_frame,
+            command=self.load_find_basis_value_frame,
         )
         view_menu.add_command(
             label='Unit Basis',
-            command=self.load_unit_basis_frame,
+            command=self.load_find_formulas_frame,
         )
         view_menu.add_command(
             label='Formula Converter',
@@ -38,24 +38,24 @@ class App(tk.Tk):
             underline=0
         )
 
-        self.load_unit_basis_frame()
+        self.load_formula_converter_frame()
 
-    def load_unit_basis_frame(self):
-        if self.current_frame:
+    def load_find_formulas_frame(self):
+        if self.current_frame is not None:
             self.current_frame.forget()
-        self.current_frame = self.unit_basis_frame
+        self.current_frame = self.find_formulas_frame
         self.current_frame.pack()
         self.title('Pricing Tool - Unit Basis')
 
-    def load_unit_formula_frame(self):
-        if self.current_frame:
+    def load_find_basis_value_frame(self):
+        if self.current_frame is not None:
             self.current_frame.forget()
-        self.current_frame = self.unit_formula_frame
+        self.current_frame = self.find_basis_value_frame
         self.current_frame.pack()
         self.title('Pricing Tool - Unit Formula')
 
     def load_formula_converter_frame(self):
-        if self.current_frame:
+        if self.current_frame is not None:
             self.current_frame.forget()
         self.current_frame = self.formula_converter_frame
         self.current_frame.pack()

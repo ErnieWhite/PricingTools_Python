@@ -9,7 +9,7 @@ import pyperclip
 import utility
 
 
-class ConverterFrame(ttk.Frame):
+class FormulaConverterFrame(ttk.Frame):
     """
 
     """
@@ -108,6 +108,7 @@ class ConverterFrame(ttk.Frame):
     def handle_formula_change_event(self, *_):
         value = self.formula_string_var.get()
         value = value.upper()
+        self.formula_string_var.set(value)
 
         print(value, utility.valid_formula(value))
         if utility.valid_formula(value):
@@ -173,7 +174,7 @@ if __name__ == '__main__':
 
     app.title('Convert Formula')
 
-    frame = ConverterFrame(app)
+    frame = FormulaConverterFrame(app)
     frame.pack()
 
     app.mainloop()
