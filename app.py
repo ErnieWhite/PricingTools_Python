@@ -20,11 +20,11 @@ class App(tk.Tk):
 
         view_menu = tk.Menu(menubar, tearoff=False)
         view_menu.add_command(
-            label='Unit Formula',
+            label='Find Basis Value',
             command=self.load_find_basis_value_frame,
         )
         view_menu.add_command(
-            label='Unit Basis',
+            label='Find Formulas',
             command=self.load_find_formulas_frame,
         )
         view_menu.add_command(
