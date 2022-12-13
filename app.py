@@ -44,21 +44,21 @@ class App(tk.Tk):
         if self.current_frame is not None:
             self.current_frame.forget()
         self.current_frame = self.find_formulas_frame
-        self.current_frame.pack()
+        self.current_frame.pack(padx=10, pady=10)
         self.title('Pricing Tool - Unit Basis')
 
     def load_find_basis_value_frame(self):
         if self.current_frame is not None:
             self.current_frame.forget()
         self.current_frame = self.find_basis_value_frame
-        self.current_frame.pack()
+        self.current_frame.pack(padx=10, pady=10)
         self.title('Pricing Tool - Unit Formula')
 
     def load_formula_converter_frame(self):
         if self.current_frame is not None:
             self.current_frame.forget()
         self.current_frame = self.formula_converter_frame
-        self.current_frame.pack()
+        self.current_frame.pack(padx=10, pady=10)
         self.title('Pricing Tool - Formula Converter')
 
 
