@@ -71,31 +71,31 @@ class FormulaConverterFrame(ttk.Frame):
         :return:
         """
         # place the current widget
-        self.current_formula_label.grid(column=0, row=0, sticky='w')
-        self.current_formula_entry.grid(column=1, row=0)
+        self.current_formula_label.grid(column=0, row=0, sticky='w', padx=2, pady=2)
+        self.current_formula_entry.grid(column=1, row=0, padx=2, pady=2)
 
         # place the separator
         self.separator.grid(column=0, row=1, columnspan=3, pady=5, sticky='we')
 
         # place the multiplier widgets
-        self.multiplier_formula_label.grid(column=0, row=2, sticky='w')
-        self.multiplier_formula_entry.grid(column=1, row=2)
-        self.multiplier_formula_button.grid(column=2, row=2)
+        self.multiplier_formula_label.grid(column=0, row=2, sticky='w', padx=2, pady=2)
+        self.multiplier_formula_entry.grid(column=1, row=2, padx=2, pady=2)
+        self.multiplier_formula_button.grid(column=2, row=2, padx=2, pady=2)
 
         # place the discount widgets
-        self.discount_formula_label.grid(column=0, row=3, sticky='w')
-        self.discount_formula_entry.grid(column=1, row=3)
-        self.discount_formula_button.grid(column=2, row=3)
+        self.discount_formula_label.grid(column=0, row=3, sticky='w', padx=2, pady=2)
+        self.discount_formula_entry.grid(column=1, row=3, padx=2, pady=2)
+        self.discount_formula_button.grid(column=2, row=3, padx=2, pady=2)
 
         # place the markup widget
-        self.markup_formula_label.grid(column=0, row=4, sticky='w')
-        self.markup_formula_entry.grid(column=1, row=4)
-        self.markup_formula_button.grid(column=2, row=4)
+        self.markup_formula_label.grid(column=0, row=4, sticky='w', padx=2, pady=2)
+        self.markup_formula_entry.grid(column=1, row=4, padx=2, pady=2)
+        self.markup_formula_button.grid(column=2, row=4, padx=2, pady=2)
 
         # place the gross profit widgets
-        self.gross_profit_formula_label.grid(column=0, row=5, sticky='w')
-        self.gross_profit_formula_entry.grid(column=1, row=5)
-        self.gross_profit_formula_button.grid(column=2, row=5)
+        self.gross_profit_formula_label.grid(column=0, row=5, sticky='w', padx=2, pady=2)
+        self.gross_profit_formula_entry.grid(column=1, row=5, padx=2, pady=2)
+        self.gross_profit_formula_button.grid(column=2, row=5, padx=2, pady=2)
 
     def setup_bindings(self):
         """

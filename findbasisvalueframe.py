@@ -41,15 +41,18 @@ class FindBasisValueFrame(ttk.Frame):
         )
         self.calculated_basis_entry = ttk.Entry(self, state='readonly', textvariable=self.basis_price_var)
 
-        self.unit_price_label.grid(row=0, column=0, sticky='w')
-        self.unit_price_entry.grid(row=0, column=1, sticky='we')
+        self.unit_price_label.grid(row=0, column=0, sticky='w', padx=2, pady=2)
+        self.unit_price_entry.grid(row=0, column=1, sticky='we', padx=2, pady=2)
 
-        self.formula_label.grid(row=1, column=0, sticky='w')
-        self.formula_entry.grid(row=1, column=1, sticky='we')
+        self.formula_label.grid(row=1, column=0, sticky='w', padx=2, pady=2)
+        self.formula_entry.grid(row=1, column=1, sticky='we', padx=2, pady=2)
 
-        self.calculated_basis_label.grid(row=2, column=0, sticky='w')
-        self.calculated_basis_entry.grid(row=2, column=1, sticky='we')
-        self.copy_button.grid(row=3, column=1, sticky='we')
+        ttk.Separator(self).grid(row=2, column=0, columnspan=2, sticky='ew', pady=5)
+
+        self.calculated_basis_label.grid(row=3, column=0, sticky='w', padx=2, pady=2)
+        self.calculated_basis_entry.grid(row=3, column=1, sticky='we', padx=2, pady=2)
+
+        self.copy_button.grid(row=4, column=1, sticky='we', padx=2, pady=2)
 
         self.unit_price_var.trace_add('write', self.update_basis_price)
         self.formula_var.trace_add('write', self.update_basis_price)

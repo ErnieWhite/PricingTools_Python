@@ -6,6 +6,10 @@ import findformulasframe
 
 
 class App(tk.Tk):
+    FINDFORMULA = 'Find Formula'
+    FINDBASIS = 'Find Basis Value'
+    CONVERTFORMULA = 'Convert Formula'
+
     def __init__(self) -> None:
         super().__init__()
 
@@ -20,15 +24,15 @@ class App(tk.Tk):
 
         view_menu = tk.Menu(menubar, tearoff=False)
         view_menu.add_command(
-            label='Find Basis Value',
+            label=App.FINDBASIS,
             command=self.load_find_basis_value_frame,
         )
         view_menu.add_command(
-            label='Find Formulas',
+            label=App.FINDFORMULA,
             command=self.load_find_formulas_frame,
         )
         view_menu.add_command(
-            label='Formula Converter',
+            label=App.CONVERTFORMULA,
             command=self.load_formula_converter_frame,
         )
 
@@ -40,26 +44,21 @@ class App(tk.Tk):
 
         self.load_formula_converter_frame()
 
-    def load_find_formulas_frame(self):
+    def swap_frames(self, frame, title):
         if self.current_frame is not None:
             self.current_frame.forget()
-        self.current_frame = self.find_formulas_frame
+        self.current_frame = frame
         self.current_frame.pack(padx=10, pady=10)
-        self.title('Pricing Tool - Unit Basis')
+        self.title('Pricing Tool - ' + title)
+
+    def load_find_formulas_frame(self):
+        self.swap_frames(self.find_formulas_frame, App.FINDFORMULA)
 
     def load_find_basis_value_frame(self):
-        if self.current_frame is not None:
-            self.current_frame.forget()
-        self.current_frame = self.find_basis_value_frame
-        self.current_frame.pack(padx=10, pady=10)
-        self.title('Pricing Tool - Unit Formula')
+        self.swap_frames(self.find_basis_value_frame, App.FINDBASIS)
 
     def load_formula_converter_frame(self):
-        if self.current_frame is not None:
-            self.current_frame.forget()
-        self.current_frame = self.formula_converter_frame
-        self.current_frame.pack(padx=10, pady=10)
-        self.title('Pricing Tool - Formula Converter')
+        self.swap_frames(self.formula_converter_frame, App.CONVERTFORMULA)
 
 
 if __name__ == '__main__':
