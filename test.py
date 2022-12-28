@@ -34,4 +34,3 @@ class UtilityTest(unittest.TestCase):
     def test_none_formula(self):
         formula = None
         self.assertFalse(valid_formula(formula))
-
