@@ -27,8 +27,12 @@ class ConvertFormula(ttk.Frame):
 
         self.multiplier = 0
 
-        # create the formula StringVar
+        # create the StringVars
         self.formula_string_var = tk.StringVar()
+        self.multiplier_var = tk.StringVar()
+        self.discount_var = tk.StringVar()
+        self.markup_var = tk.StringVar()
+        self.gross_profit_var = tk.StringVar()
 
         # create the separator
         self.separator = ttk.Separator(self, orient='horizontal')
@@ -42,12 +46,6 @@ class ConvertFormula(ttk.Frame):
         self.gross_profit_formula_label = ttk.Label(self, text='Gross Profit')
         self.decimals_label = ttk.Label(self, text='Decimals')
 
-        # create the StringVars
-        self.multiplier_string_var = tk.StringVar()
-        self.discount_string_var = tk.StringVar()
-        self.markup_string_var = tk.StringVar()
-        self.gross_profit_string_var = tk.StringVar()
-
         # create the entries
         self.current_formula_entry = ttk.Entry(
             self,
@@ -56,10 +54,10 @@ class ConvertFormula(ttk.Frame):
             validatecommand=vcmd,
             invalidcommand=ivcmd,
         )
-        self.multiplier_formula_entry = ttk.Entry(self, textvariable=self.multiplier_string_var, state='readonly')
-        self.discount_formula_entry = ttk.Entry(self, textvariable=self.discount_string_var, state='readonly')
-        self.markup_formula_entry = ttk.Entry(self, textvariable=self.markup_string_var, state='readonly')
-        self.gross_profit_formula_entry = ttk.Entry(self, textvariable=self.gross_profit_string_var, state='readonly')
+        self.multiplier_formula_entry = ttk.Entry(self, textvariable=self.multiplier_var, state='readonly')
+        self.discount_formula_entry = ttk.Entry(self, textvariable=self.discount_var, state='readonly')
+        self.markup_formula_entry = ttk.Entry(self, textvariable=self.markup_var, state='readonly')
+        self.gross_profit_formula_entry = ttk.Entry(self, textvariable=self.gross_profit_var, state='readonly')
 
         # create the copy buttons
         self.multiplier_formula_button = ttk.Button(self, text="Copy", command=self.copy_multiplier_formula)
@@ -115,33 +113,31 @@ class ConvertFormula(ttk.Frame):
         value = value.upper()
         self.formula_string_var.set(value)
 
-        print(value, utility.valid_formula(value))
+        self.clear_calculated_formulas()
         if utility.valid_formula(value):
             multiplier = utility.calculate_multiplier(value)
-            self.multiplier_string_var.set(utility.find_multiplier_formula(multiplier))
-            self.discount_string_var.set(utility.find_discount_formula(multiplier))
-            self.markup_string_var.set(utility.find_markup_formula(multiplier))
-            self.gross_profit_string_var.set(utility.find_gross_profit_formula(multiplier))
-        else:
-            self.clear_calculated_formulas()
+            self.multiplier_var.set(utility.find_multiplier_formula(multiplier))
+            self.discount_var.set(utility.find_discount_formula(multiplier))
+            self.markup_var.set(utility.find_markup_formula(multiplier))
+            self.gross_profit_var.set(utility.find_gross_profit_formula(multiplier))
 
     def clear_calculated_formulas(self):
-        self.multiplier_string_var.set('')
-        self.discount_string_var.set('')
-        self.markup_string_var.set('')
-        self.gross_profit_string_var.set('')
+        self.multiplier_var.set('')
+        self.discount_var.set('')
+        self.markup_var.set('')
+        self.gross_profit_var.set('')
 
     def copy_multiplier_formula(self):
-        pyperclip.copy(self.multiplier_formula_entry.get())
+        pyperclip.copy(self.multiplier_var.get())
 
     def copy_discount_formula(self):
-        pyperclip.copy(self.discount_formula_entry.get())
+        pyperclip.copy(self.discount_var.get())
 
     def copy_markup_formula(self):
-        pyperclip.copy(self.markup_formula_entry.get())
+        pyperclip.copy(self.markup_var.get())
 
     def copy_gross_profit_formula(self):
-        pyperclip.copy(self.gross_profit_formula_entry.get())
+        pyperclip.copy(self.gross_profit_var.get())
 
     @staticmethod
     def validate(value) -> bool:
