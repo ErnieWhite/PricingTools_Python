@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 
 
-class AdjustFormulaFrame(ttk.Frame):
+class AdjustFormula(ttk.Frame):
     def __init__(self, master, *args, **kwargs):
         super().__init__(master, *args, **kwargs)
 
@@ -29,8 +29,6 @@ class AdjustFormulaFrame(ttk.Frame):
 
         self.place_widgets()
 
-        self.grid(row=0, column=0)
-
     def place_widgets(self):
         ttk.Label(self, text="Unit Price").grid(row=0, column=0)
         self.unit_price_entry.grid(row=0, column=1)
@@ -55,5 +53,6 @@ class AdjustFormulaFrame(ttk.Frame):
 
 if __name__ == "__main__":
     app = tk.Tk()
-    frame = AdjustFormulaFrame(app)
+    frame = AdjustFormula(app)
+    frame.pack()
     app.mainloop()

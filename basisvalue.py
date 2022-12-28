@@ -5,7 +5,7 @@ import pyperclip
 import re
 
 
-class FindBasisValueFrame(ttk.Frame):
+class BasisValue(ttk.Frame):
     def __init__(self, master, **kwargs):
         super().__init__(master=master, **kwargs)
 
@@ -111,7 +111,7 @@ if __name__ == '__main__':
 
     app.title('Find Basis Value')
 
-    frame = FindBasisValueFrame(app)
+    frame = BasisValue(app)
     frame.pack()
 
     app.mainloop()

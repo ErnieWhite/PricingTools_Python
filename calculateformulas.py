@@ -4,7 +4,7 @@ import utility
 import pyperclip
 
 
-class FindFormulaFrame(ttk.Frame):
+class CalculateFormulas(ttk.Frame):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
 
@@ -132,7 +132,7 @@ if __name__ == '__main__':
 
     app.title('Find Formula')
 
-    frame = FindFormulaFrame(app)
+    frame = CalculateFormulas(app)
     frame.pack()
 
     app.mainloop()

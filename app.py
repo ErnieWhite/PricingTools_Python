@@ -1,23 +1,26 @@
 import tkinter as tk
 
-import findbasisvalueframe
-import formulaconverterframe
-import findformulasframe
+import adjustformula
+import basisvalue
+import convertformula
+import calculateformulas
 
 
 class App(tk.Tk):
-    FINDFORMULA = 'Find Formula'
+    CALCULATEFORMULA = 'Calculate Formula'
     FINDBASIS = 'Find Basis Value'
     CONVERTFORMULA = 'Convert Formula'
+    ADJUSTFORMULA = 'Adjust Formula'
 
     def __init__(self) -> None:
         super().__init__()
 
         self.current_frame = None
 
-        self.find_basis_value_frame = findbasisvalueframe.FindBasisValueFrame(self)
-        self.find_formulas_frame = findformulasframe.FindFormulaFrame(self)
-        self.formula_converter_frame = formulaconverterframe.FormulaConverterFrame(self)
+        self.find_basis_value_frame = basisvalue.BasisValue(self)
+        self.find_formulas_frame = calculateformulas.CalculateFormulas(self)
+        self.formula_converter_frame = convertformula.ConvertFormula(self)
+        self.adjust_formula_frame = adjustformula.AdjustFormula(self)
 
         menubar = tk.Menu()
         self.config(menu=menubar)
@@ -28,12 +31,16 @@ class App(tk.Tk):
             command=self.load_find_basis_value_frame,
         )
         view_menu.add_command(
-            label=App.FINDFORMULA,
+            label=App.CALCULATEFORMULA,
             command=self.load_find_formulas_frame,
         )
         view_menu.add_command(
             label=App.CONVERTFORMULA,
             command=self.load_formula_converter_frame,
+        )
+        view_menu.add_command(
+            label=App.ADJUSTFORMULA,
+            command=self.load_adjust_formula_frame,
         )
 
         menubar.add_cascade(
@@ -52,13 +59,16 @@ class App(tk.Tk):
         self.title('Pricing Tool - ' + title)
 
     def load_find_formulas_frame(self):
-        self.swap_frames(self.find_formulas_frame, App.FINDFORMULA)
+        self.swap_frames(self.find_formulas_frame, App.CALCULATEFORMULA)
 
     def load_find_basis_value_frame(self):
         self.swap_frames(self.find_basis_value_frame, App.FINDBASIS)
 
     def load_formula_converter_frame(self):
         self.swap_frames(self.formula_converter_frame, App.CONVERTFORMULA)
+
+    def load_adjust_formula_frame(self):
+        self.swap_frames(self.adjust_formula_frame, App.ADJUSTFORMULA)
 
 
 if __name__ == '__main__':

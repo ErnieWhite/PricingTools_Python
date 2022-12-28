@@ -9,7 +9,7 @@ import pyperclip
 import utility
 
 
-class FormulaConverterFrame(ttk.Frame):
+class ConvertFormula(ttk.Frame):
     """
 
     """
@@ -174,7 +174,7 @@ if __name__ == '__main__':
 
     app.title('Convert Formula')
 
-    frame = FormulaConverterFrame(app)
+    frame = ConvertFormula(app)
     frame.pack()
 
     app.mainloop()

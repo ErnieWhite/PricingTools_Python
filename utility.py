@@ -25,7 +25,7 @@ def calculate_multiplier(formula: str) -> float:
         number = float(formula[2:])
         # GP100 is not a valid formula in eclipse
         if number > 99.99:
-            raise ValueError(f'GP Formulas must be below 100: {formula}')
+            raise ValueError(f'GP CalculateFormulas must be below 100: {formula}')
         multiplier = 1 / (1 - float(formula[2:]) / 100)
         return multiplier
 
