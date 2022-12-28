@@ -47,12 +47,12 @@ class FindBasisValueFrame(ttk.Frame):
         self.formula_label.grid(row=1, column=0, sticky='w', padx=2, pady=2)
         self.formula_entry.grid(row=1, column=1, sticky='we', padx=2, pady=2)
 
-        ttk.Separator(self).grid(row=2, column=0, columnspan=2, sticky='ew', pady=5)
+        ttk.Separator(self).grid(row=0, column=2, rowspan=2, sticky='ew', pady=5)
 
-        self.calculated_basis_label.grid(row=3, column=0, sticky='w', padx=2, pady=2)
-        self.calculated_basis_entry.grid(row=3, column=1, sticky='we', padx=2, pady=2)
+        self.calculated_basis_label.grid(row=0, column=3, sticky='w', padx=2, pady=2)
+        self.calculated_basis_entry.grid(row=0, column=4, sticky='we', padx=2, pady=2)
 
-        self.copy_button.grid(row=4, column=1, sticky='we', padx=2, pady=2)
+        self.copy_button.grid(row=1, column=3, sticky='we', padx=2, pady=2)
 
         self.unit_price_var.trace_add('write', self.update_basis_price)
         self.formula_var.trace_add('write', self.update_basis_price)
