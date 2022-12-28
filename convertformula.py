@@ -61,11 +61,6 @@ class ConvertFormula(ttk.Frame):
 
         # create the copy buttons
         # TODO: Replace the text with an image
-        # self.multiplier_formula_button = ttk.Button(self, text="Copy", command=self.copy_multiplier_formula)
-        # self.discount_formula_button = ttk.Button(self, text="Copy", command=self.copy_discount_formula)
-        # self.markup_formula_button = ttk.Button(self, text="Copy", command=self.copy_markup_formula)
-        # self.gross_profit_formula_button = ttk.Button(self, text="Copy", command=self.copy_gross_profit_formula)
-
         self.multiplier_formula_button = ttk.Button(
             self,
             text="Copy",
