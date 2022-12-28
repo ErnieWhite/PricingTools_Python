@@ -34,11 +34,13 @@ class ConvertFormula(ttk.Frame):
         self.separator = ttk.Separator(self, orient='horizontal')
 
         # create the labels
+        # TODO: move these two the place_widgets method and stop keeping a reference to them
         self.current_formula_label = ttk.Label(self, text='Formula')
         self.multiplier_formula_label = ttk.Label(self, text='Multiplier')
         self.discount_formula_label = ttk.Label(self, text='Discount')
         self.markup_formula_label = ttk.Label(self, text='Markup')
         self.gross_profit_formula_label = ttk.Label(self, text='Gross Profit')
+        self.decimals_label = ttk.Label(self, text='Decimals')
 
         # create the StringVars
         self.multiplier_string_var = tk.StringVar()
@@ -115,11 +117,11 @@ class ConvertFormula(ttk.Frame):
 
         print(value, utility.valid_formula(value))
         if utility.valid_formula(value):
-            self.multiplier = utility.calculate_multiplier(value)
-            self.update_multiplier()
-            self.update_discount()
-            self.update_markup()
-            self.update_gross_profit()
+            multiplier = utility.calculate_multiplier(value)
+            self.multiplier_string_var.set(utility.find_multiplier_formula(multiplier))
+            self.discount_string_var.set(utility.find_discount_formula(multiplier))
+            self.markup_string_var.set(utility.find_markup_formula(multiplier))
+            self.gross_profit_string_var.set(utility.find_gross_profit_formula(multiplier))
         else:
             self.clear_calculated_formulas()
 
@@ -128,18 +130,6 @@ class ConvertFormula(ttk.Frame):
         self.discount_string_var.set('')
         self.markup_string_var.set('')
         self.gross_profit_string_var.set('')
-
-    def update_multiplier(self):
-        self.multiplier_string_var.set(utility.find_multiplier_formula(self.multiplier))
-
-    def update_discount(self):
-        self.discount_string_var.set(utility.find_discount_formula(self.multiplier))
-
-    def update_markup(self):
-        self.markup_string_var.set(utility.find_markup_formula(self.multiplier))
-
-    def update_gross_profit(self):
-        self.gross_profit_string_var.set(utility.find_gross_profit_formula(self.multiplier))
 
     def copy_multiplier_formula(self):
         pyperclip.copy(self.multiplier_formula_entry.get())
