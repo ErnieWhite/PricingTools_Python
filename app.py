@@ -7,10 +7,10 @@ import calculateformulas
 
 
 class App(tk.Tk):
-    CALCULATEFORMULA = 'Calculate Formula'
-    FINDBASIS = 'Find Basis Value'
-    CONVERTFORMULA = 'Convert Formula'
-    ADJUSTFORMULA = 'Adjust Formula'
+    CALCULATE_FORMULA = 'Calculate Formula'
+    FIND_BASIS = 'Find Basis Value'
+    CONVERT_FORMULA = 'Convert Formula'
+    ADJUST_FORMULA = 'Adjust Formula'
 
     def __init__(self) -> None:
         super().__init__()
@@ -27,19 +27,19 @@ class App(tk.Tk):
 
         view_menu = tk.Menu(menubar, tearoff=False)
         view_menu.add_command(
-            label=App.FINDBASIS,
+            label=App.FIND_BASIS,
             command=self.load_find_basis_value_frame,
         )
         view_menu.add_command(
-            label=App.CALCULATEFORMULA,
+            label=App.CALCULATE_FORMULA,
             command=self.load_find_formulas_frame,
         )
         view_menu.add_command(
-            label=App.CONVERTFORMULA,
+            label=App.CONVERT_FORMULA,
             command=self.load_formula_converter_frame,
         )
         view_menu.add_command(
-            label=App.ADJUSTFORMULA,
+            label=App.ADJUST_FORMULA,
             command=self.load_adjust_formula_frame,
         )
 
@@ -51,7 +51,7 @@ class App(tk.Tk):
 
         self.load_formula_converter_frame()
 
-    def swap_frames(self, frame, title):
+    def swap_frames(self, frame):
         if self.current_frame is not None:
             self.current_frame.forget()
         self.current_frame = frame
@@ -59,16 +59,16 @@ class App(tk.Tk):
         self.title('Pricing Tool - ' + frame.title)
 
     def load_find_formulas_frame(self):
-        self.swap_frames(self.find_formulas_frame, App.CALCULATEFORMULA)
+        self.swap_frames(self.find_formulas_frame)
 
     def load_find_basis_value_frame(self):
-        self.swap_frames(self.find_basis_value_frame, App.FINDBASIS)
+        self.swap_frames(self.find_basis_value_frame)
 
     def load_formula_converter_frame(self):
-        self.swap_frames(self.formula_converter_frame, App.CONVERTFORMULA)
+        self.swap_frames(self.formula_converter_frame)
 
     def load_adjust_formula_frame(self):
-        self.swap_frames(self.adjust_formula_frame, App.ADJUSTFORMULA)
+        self.swap_frames(self.adjust_formula_frame)
 
 
 if __name__ == '__main__':

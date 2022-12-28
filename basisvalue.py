@@ -83,7 +83,7 @@ class BasisValue(ttk.Frame):
             return True
         return False
 
-    def update_basis_price(self, *args):
+    def update_basis_price(self, *_):
         print('update basis price')
         self.formula_var.set(self.formula_var.get().upper())
         if not utility.valid_formula(self.formula_var.get()):
