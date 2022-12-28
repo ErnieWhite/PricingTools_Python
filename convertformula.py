@@ -25,8 +25,6 @@ class ConvertFormula(ttk.Frame):
         vcmd = (self.register(self.validate), '%P')
         ivcmd = (self.register(self.on_invalid),)
 
-        self.multiplier = 0
-
         # create the StringVars
         self.formula_string_var = tk.StringVar()
         self.multiplier_var = tk.StringVar()
@@ -36,9 +34,6 @@ class ConvertFormula(ttk.Frame):
 
         # create the separator
         self.separator = ttk.Separator(self, orient='horizontal')
-
-        # create the labels
-        # TODO: move these two the place_widgets method and stop keeping a reference to them
 
         # create the entries
         self.current_formula_entry = ttk.Entry(
