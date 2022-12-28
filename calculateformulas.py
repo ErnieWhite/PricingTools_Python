@@ -8,6 +8,8 @@ class CalculateFormulas(ttk.Frame):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
 
+        self.title = 'Calculate Formulas'
+
         vcmd = (self.register(self.validate), '%P')
         ivcmd = (self.register(self.on_invalid), )
 
@@ -130,9 +132,8 @@ class CalculateFormulas(ttk.Frame):
 if __name__ == '__main__':
     app = tk.Tk()
 
-    app.title('Find Formula')
-
     frame = CalculateFormulas(app)
     frame.pack()
+    app.title(frame.title)
 
     app.mainloop()

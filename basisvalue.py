@@ -9,6 +9,8 @@ class BasisValue(ttk.Frame):
     def __init__(self, master, **kwargs):
         super().__init__(master=master, **kwargs)
 
+        self.title = 'Basis Value'
+
         self.multiplier = 0
 
         float_vcmd = (self.register(self.validate_float), '%P')
@@ -109,9 +111,9 @@ class BasisValue(ttk.Frame):
 if __name__ == '__main__':
     app = tk.Tk()
 
-    app.title('Find Basis Value')
-
     frame = BasisValue(app)
     frame.pack()
+
+    app.title(frame.title)
 
     app.mainloop()

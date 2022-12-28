@@ -19,6 +19,9 @@ class ConvertFormula(ttk.Frame):
         :param container:
         """
         super().__init__(container)
+
+        self.title = 'Convert Formula'
+
         vcmd = (self.register(self.validate), '%P')
         ivcmd = (self.register(self.on_invalid),)
 
@@ -172,9 +175,8 @@ class ConvertFormula(ttk.Frame):
 if __name__ == '__main__':
     app = tk.Tk()
 
-    app.title('Convert Formula')
-
     frame = ConvertFormula(app)
     frame.pack()
+    app.title(frame.title)
 
     app.mainloop()

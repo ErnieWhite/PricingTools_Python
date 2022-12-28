@@ -6,6 +6,8 @@ class AdjustFormula(ttk.Frame):
     def __init__(self, master, *args, **kwargs):
         super().__init__(master, *args, **kwargs)
 
+        self.title = 'Adjust Formula'
+
         # create the tk vars
         self.spinner_value = tk.DoubleVar(value=0)
 
@@ -55,4 +57,5 @@ if __name__ == "__main__":
     app = tk.Tk()
     frame = AdjustFormula(app)
     frame.pack()
+    app.title(frame.title)
     app.mainloop()

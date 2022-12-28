@@ -55,8 +55,8 @@ class App(tk.Tk):
         if self.current_frame is not None:
             self.current_frame.forget()
         self.current_frame = frame
-        self.current_frame.pack(padx=10, pady=10)
-        self.title('Pricing Tool - ' + title)
+        frame.pack(padx=10, pady=10)
+        self.title('Pricing Tool - ' + frame.title)
 
     def load_find_formulas_frame(self):
         self.swap_frames(self.find_formulas_frame, App.CALCULATEFORMULA)
