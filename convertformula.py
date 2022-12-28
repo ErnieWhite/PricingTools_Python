@@ -60,10 +60,32 @@ class ConvertFormula(ttk.Frame):
         self.gross_profit_formula_entry = ttk.Entry(self, textvariable=self.gross_profit_var, state='readonly')
 
         # create the copy buttons
-        self.multiplier_formula_button = ttk.Button(self, text="Copy", command=self.copy_multiplier_formula)
-        self.discount_formula_button = ttk.Button(self, text="Copy", command=self.copy_discount_formula)
-        self.markup_formula_button = ttk.Button(self, text="Copy", command=self.copy_markup_formula)
-        self.gross_profit_formula_button = ttk.Button(self, text="Copy", command=self.copy_gross_profit_formula)
+        # TODO: Replace the text with an image
+        # self.multiplier_formula_button = ttk.Button(self, text="Copy", command=self.copy_multiplier_formula)
+        # self.discount_formula_button = ttk.Button(self, text="Copy", command=self.copy_discount_formula)
+        # self.markup_formula_button = ttk.Button(self, text="Copy", command=self.copy_markup_formula)
+        # self.gross_profit_formula_button = ttk.Button(self, text="Copy", command=self.copy_gross_profit_formula)
+
+        self.multiplier_formula_button = ttk.Button(
+            self,
+            text="Copy",
+            command=lambda: self.copy_formula(self.multiplier_var),
+        )
+        self.discount_formula_button = ttk.Button(
+            self,
+            text="Copy",
+            command=lambda: self.copy_formula(self.discount_var),
+        )
+        self.markup_formula_button = ttk.Button(
+            self,
+            text="Copy",
+            command=lambda: self.copy_formula(self.markup_var),
+        )
+        self.gross_profit_formula_button = ttk.Button(
+            self,
+            text="Copy",
+            command=lambda: self.copy_formula(self.gross_profit_var),
+        )
 
         self.place_widgets()
         self.setup_bindings()
@@ -105,7 +127,6 @@ class ConvertFormula(ttk.Frame):
 
         :return:
         """
-        # self.current_formula_entry.bind('<Return>', self.handle_formula_change_event)
         self.formula_string_var.trace('w', self.handle_formula_change_event)
 
     def handle_formula_change_event(self, *_):
@@ -127,17 +148,9 @@ class ConvertFormula(ttk.Frame):
         self.markup_var.set('')
         self.gross_profit_var.set('')
 
-    def copy_multiplier_formula(self):
-        pyperclip.copy(self.multiplier_var.get())
-
-    def copy_discount_formula(self):
-        pyperclip.copy(self.discount_var.get())
-
-    def copy_markup_formula(self):
-        pyperclip.copy(self.markup_var.get())
-
-    def copy_gross_profit_formula(self):
-        pyperclip.copy(self.gross_profit_var.get())
+    @staticmethod
+    def copy_formula(string_var):
+        pyperclip.copy(string_var.get())
 
     @staticmethod
     def validate(value) -> bool:
