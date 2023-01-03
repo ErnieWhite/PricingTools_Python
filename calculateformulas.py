@@ -78,9 +78,9 @@ class CalculateFormulas(ttk.Frame):
         self.gross_profit_formula_entry.grid(row=3, column=2, sticky='ew', padx=2, pady=2)
         self.gross_profit_formula_copy_button.grid(row=3, column=3, padx=2, pady=2)
 
-        self.unit_price_var.trace('w', self.update_formulas)
-        self.basis_value_var.trace('w', self.update_formulas)
-        self.decimals_var.trace('w', self.update_formulas)
+        self.unit_price_var.trace_add('write', self.update_formulas)
+        self.basis_value_var.trace_add('write', self.update_formulas)
+        self.decimals_var.trace_add('write', self.update_formulas)
 
     def update_formulas(self, *_):
         if not self.unit_price_var.get() or not self.basis_value_var.get():
