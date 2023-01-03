@@ -48,7 +48,7 @@ class CalculateFormulas(ttk.Frame):
             textvariable=self.decimals_var,
             state='readonly',
         )
-        self.decimals_combo.set('Auto')
+        self.decimals_combo.current(0)
 
         self.multiplier_formula_entry = ttk.Entry(self, textvariable=self.multiplier_var, state='readonly')
         self.discount_formula_entry = ttk.Entry(self, textvariable=self.discount_var, state='readonly')
