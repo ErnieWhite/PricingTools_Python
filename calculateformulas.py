@@ -44,8 +44,9 @@ class CalculateFormulas(ttk.Frame):
         )
         self.decimals_combo = ttk.Combobox(
             self,
-            values=('Auto', '1', '2', '3', '4', '5', '6'),
+            values=('Auto', '0', '1', '2', '3', '4', '5', '6'),
             textvariable=self.decimals_var,
+            state='readonly',
         )
         self.decimals_combo.set('Auto')
 
@@ -79,6 +80,7 @@ class CalculateFormulas(ttk.Frame):
 
         self.unit_price_var.trace('w', self.update_formulas)
         self.basis_value_var.trace('w', self.update_formulas)
+        self.decimals_var.trace('w', self.update_formulas)
 
     def update_formulas(self, *_):
         if not self.unit_price_var.get() or not self.basis_value_var.get():
@@ -87,11 +89,13 @@ class CalculateFormulas(ttk.Frame):
         if float(self.unit_price_var.get()) == 0 or float(self.basis_value_var.get()) == 0:
             self.clear_formulas()
             return
+        decimals = self.decimals_var.get()
         multiplier = float(self.unit_price_var.get()) / float(self.basis_value_var.get())
-        multiplier_formula = utility.find_multiplier_formula(multiplier)
-        discount_formula = utility.find_discount_formula(multiplier)
-        markup_formula = utility.find_markup_formula(multiplier)
-        gross_profit_formula = utility.find_gross_profit_formula(multiplier)
+        multiplier_formula = utility.find_multiplier_formula(multiplier, decimals)
+        print(multiplier_formula)
+        discount_formula = utility.find_discount_formula(multiplier, decimals)
+        markup_formula = utility.find_markup_formula(multiplier, decimals)
+        gross_profit_formula = utility.find_gross_profit_formula(multiplier, decimals)
         self.multiplier_var.set(multiplier_formula)
         self.discount_var.set(discount_formula)
         self.markup_var.set(markup_formula)
