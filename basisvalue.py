@@ -20,6 +20,7 @@ class BasisValue(ttk.Frame):
         self.unit_price_var = tk.StringVar()
         self.formula_var = tk.StringVar()
         self.basis_price_var = tk.StringVar()
+        self.decimals_var = tk.StringVar()
 
         # create the widgets
         self.unit_price_label = ttk.Label(self, text='Unit Price')
@@ -41,6 +42,14 @@ class BasisValue(ttk.Frame):
             validatecommand=formula_vcmd,
             invalidcommand=ivcmd,
         )
+        combo_values = ('Auto', '0', '1', '2', '3', '4')
+        self.decimals = ttk.Combobox(
+            self,
+            textvariable=self.decimals_var,
+            state='readonly',
+            values=combo_values,
+        )
+        self.decimals.current(0)
         self.calculated_basis_entry = ttk.Entry(self, state='readonly', textvariable=self.basis_price_var)
 
         self.unit_price_label.grid(row=0, column=0, sticky='w', padx=2, pady=2)
@@ -48,6 +57,9 @@ class BasisValue(ttk.Frame):
 
         self.formula_label.grid(row=1, column=0, sticky='w', padx=2, pady=2)
         self.formula_entry.grid(row=1, column=1, sticky='we', padx=2, pady=2)
+
+        ttk.Label(self, text='Decimals').grid(row=2, column=0, sticky='w', padx=2, pady=2)
+        self.decimals.grid(row=2, column=1, sticky='we', padx=2, pady=2)
 
         ttk.Separator(self).grid(row=0, column=2, rowspan=2, sticky='ew', pady=5)
 
@@ -58,6 +70,7 @@ class BasisValue(ttk.Frame):
 
         self.unit_price_var.trace_add('write', self.update_basis_price)
         self.formula_var.trace_add('write', self.update_basis_price)
+        self.decimals_var.trace_add('write', self.update_basis_price)
 
     @staticmethod
     def validate_float(value):
@@ -96,7 +109,12 @@ class BasisValue(ttk.Frame):
         if self.multiplier == 0:
             self.clear_basis()
             return
-        self.basis_price_var.set(str(float(self.unit_price_var.get()) / self.multiplier))
+        specifier = utility.create_specifier(self.decimals_var.get())
+        basis_price = float(self.unit_price_var.get()) / self.multiplier
+        print()
+        print(basis_price, specifier)
+        print()
+        self.basis_price_var.set(f'{basis_price:{specifier}}')
 
     def clear_basis(self):
         self.basis_price_var.set('')
