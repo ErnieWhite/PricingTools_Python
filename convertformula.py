@@ -38,14 +38,15 @@ class ConvertFormula(ttk.Frame):
             validatecommand=vcmd,
             invalidcommand=ivcmd,
         )
-        self.multiplier_formula_entry = ttk.Entry(self, textvariable=self.multiplier_var, state='readonly')
-        self.discount_formula_entry = ttk.Entry(self, textvariable=self.discount_var, state='readonly')
-        self.markup_formula_entry = ttk.Entry(self, textvariable=self.markup_var, state='readonly')
-        self.gross_profit_formula_entry = ttk.Entry(self, textvariable=self.gross_profit_var, state='readonly')
+        self.multiplier_formula_entry = ttk.Entry(self, textvariable=self.multiplier_var, state='readonly', takefocus=False)
+        self.discount_formula_entry = ttk.Entry(self, textvariable=self.discount_var, state='readonly', takefocus=False)
+        self.markup_formula_entry = ttk.Entry(self, textvariable=self.markup_var, state='readonly', takefocus=False)
+        self.gross_profit_formula_entry = ttk.Entry(self, textvariable=self.gross_profit_var, state='readonly', takefocus=False)
 
         # create the combobox
-        combo_items = ('Auto', '1', '2', '3', '4', '5', '6')
-        self.decimals = ttk.Combobox(self, values=combo_items)
+        combo_items = ('Auto', '0', '1', '2', '3', '4', '5', '6')
+        self.decimals = ttk.Combobox(self, values=combo_items, state='readonly', textvariable=self.decimals_var)
+        self.decimals.current(6)
 
         # create the copy buttons
         # TODO: Replace the text with an image
@@ -81,7 +82,7 @@ class ConvertFormula(ttk.Frame):
 
         ttk.Label(self, text='Decimals').grid(column=0, row=1, sticky='w', padx=2, pady=2)
         self.decimals.grid(column=1, row=1, padx=2, pady=2, sticky='ew')
-        self.decimals.current(0)
+        # self.decimals.current(0)
 
         # place the separator
         self.separator.grid(column=2, row=0, rowspan=6, pady=5, sticky='ns')
@@ -113,15 +114,16 @@ class ConvertFormula(ttk.Frame):
     def handle_formula_change_event(self, *_):
         value = self.formula_string_var.get()
         value = value.upper()
+        decimals = self.decimals_var.get()
         self.formula_string_var.set(value)
 
         self.clear_calculated_formulas()
         if utility.valid_formula(value):
             multiplier = utility.calculate_multiplier(value)
-            self.multiplier_var.set(utility.find_multiplier_formula(multiplier))
-            self.discount_var.set(utility.find_discount_formula(multiplier))
-            self.markup_var.set(utility.find_markup_formula(multiplier))
-            self.gross_profit_var.set(utility.find_gross_profit_formula(multiplier))
+            self.multiplier_var.set(utility.find_multiplier_formula(multiplier, decimals))
+            self.discount_var.set(utility.find_discount_formula(multiplier, decimals))
+            self.markup_var.set(utility.find_markup_formula(multiplier, decimals))
+            self.gross_profit_var.set(utility.find_gross_profit_formula(multiplier, decimals))
 
     def clear_calculated_formulas(self):
         self.multiplier_var.set('')

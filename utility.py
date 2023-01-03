@@ -36,22 +36,33 @@ def calculate_multiplier(formula: str) -> float:
     raise ValueError(f'{formula} is not a valid formula')
 
 
-def find_multiplier_formula(multiplier):
-    return f'*{multiplier:.6}'
+def create_specifier(decimals):
+    if decimals == 'Auto':
+        specifier = ''
+    else:
+        specifier = f'.0{decimals}f'
+    return specifier
 
 
-def find_markup_formula(multiplier):
-    return f'D{1/multiplier:.6}'
+def find_multiplier_formula(multiplier, decimals):
+    specifier = create_specifier(decimals)
+    return f'*{multiplier:{specifier}}'
 
 
-def find_discount_formula(multiplier):
-    return f'{(multiplier - 1)*100:+.6}'
+def find_markup_formula(multiplier, decimals):
+    specifier = create_specifier(decimals)
+    return f'D{1/multiplier:{specifier}}'
 
 
-def find_gross_profit_formula(multiplier):
-    # was having problems with different values from the f-string and rounding the number
+def find_discount_formula(multiplier, decimals):
+    specifier = create_specifier(decimals)
+    return f'{(multiplier - 1)*100:+{specifier}}'
+
+
+def find_gross_profit_formula(multiplier, decimals):
+    specifier = create_specifier(decimals)
     numeric_part = float(f'{(1-1/multiplier) * 100:.6}')
-    return f'GP{numeric_part:.6}' if numeric_part < 100 else ''
+    return f'GP{numeric_part:{specifier}}' if numeric_part < 100 else ''
 
 
 def valid_formula(formula):
