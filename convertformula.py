@@ -108,8 +108,8 @@ class ConvertFormula(ttk.Frame):
         self.gross_profit_formula_button.grid(column=5, row=3, padx=2, pady=2)
 
     def setup_bindings(self):
-        self.formula_string_var.trace('w', self.handle_formula_change_event)
-        self.decimals_var.trace('w', self.handle_formula_change_event)
+        self.formula_string_var.trace_add('write', self.handle_formula_change_event)
+        self.decimals_var.trace_add('write', self.handle_formula_change_event)
 
     def handle_formula_change_event(self, *_):
         value = self.formula_string_var.get()
