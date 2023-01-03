@@ -46,7 +46,7 @@ class ConvertFormula(ttk.Frame):
         # create the combobox
         combo_items = ('Auto', '0', '1', '2', '3', '4', '5', '6')
         self.decimals = ttk.Combobox(self, values=combo_items, state='readonly', textvariable=self.decimals_var)
-        self.decimals.current(6)
+        self.decimals.current(0)
 
         # create the copy buttons
         # TODO: Replace the text with an image
