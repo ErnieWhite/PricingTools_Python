@@ -28,7 +28,7 @@ class ConvertFormula(ttk.Frame):
         self.gross_profit_var = tk.StringVar()
 
         # create the separator
-        self.separator = ttk.Separator(self, orient='horizontal')
+        self.separator = ttk.Separator(self, orient=tk.VERTICAL)
 
         # create the entries
         self.current_formula_entry = ttk.Entry(
@@ -77,34 +77,34 @@ class ConvertFormula(ttk.Frame):
 
         # place the formula widgets
         ttk.Label(self, text='Formula').grid(column=0, row=0, sticky='w', padx=2, pady=2)
-        self.current_formula_entry.grid(column=1, row=0, padx=2, pady=2)
+        self.current_formula_entry.grid(column=1, row=0, padx=2, pady=2, sticky='ew')
 
         ttk.Label(self, text='Decimals').grid(column=0, row=1, sticky='w', padx=2, pady=2)
-        self.decimals.grid(column=1, row=1, padx=2, pady=2)
+        self.decimals.grid(column=1, row=1, padx=2, pady=2, sticky='ew')
         self.decimals.current(0)
 
         # place the separator
-        self.separator.grid(column=0, row=2, columnspan=3, pady=5, sticky='we')
+        self.separator.grid(column=2, row=0, rowspan=6, pady=5, sticky='ns')
 
         # place the multiplier widgets
-        ttk.Label(self, text='Multiplier').grid(column=0, row=3, sticky='w', padx=2, pady=2)
-        self.multiplier_formula_entry.grid(column=1, row=3, padx=2, pady=2)
-        self.multiplier_formula_button.grid(column=2, row=3, padx=2, pady=2)
+        ttk.Label(self, text='Multiplier').grid(column=3, row=0, sticky='w', padx=2, pady=2)
+        self.multiplier_formula_entry.grid(column=4, row=0, padx=2, pady=2, sticky='ew')
+        self.multiplier_formula_button.grid(column=5, row=0, padx=2, pady=2)
 
         # place the discount widgets
-        ttk.Label(self, text='Discount').grid(column=0, row=4, sticky='w', padx=2, pady=2)
-        self.discount_formula_entry.grid(column=1, row=4, padx=2, pady=2)
-        self.discount_formula_button.grid(column=2, row=4, padx=2, pady=2)
+        ttk.Label(self, text='Discount').grid(column=3, row=1, sticky='w', padx=2, pady=2)
+        self.discount_formula_entry.grid(column=4, row=1, padx=2, pady=2, sticky='ew')
+        self.discount_formula_button.grid(column=5, row=1, padx=2, pady=2)
 
         # place the markup widget
-        ttk.Label(self, text='Markup').grid(column=0, row=5, sticky='w', padx=2, pady=2)
-        self.markup_formula_entry.grid(column=1, row=5, padx=2, pady=2)
-        self.markup_formula_button.grid(column=2, row=5, padx=2, pady=2)
+        ttk.Label(self, text='Markup').grid(column=3, row=2, sticky='w', padx=2, pady=2)
+        self.markup_formula_entry.grid(column=4, row=2, padx=2, pady=2, sticky='ew')
+        self.markup_formula_button.grid(column=5, row=2, padx=2, pady=2)
 
         # place the gross profit widgets
-        ttk.Label(self, text='Gross Profit').grid(column=0, row=6, sticky='w', padx=2, pady=2)
-        self.gross_profit_formula_entry.grid(column=1, row=6, padx=2, pady=2)
-        self.gross_profit_formula_button.grid(column=2, row=6, padx=2, pady=2)
+        ttk.Label(self, text='Gross Profit').grid(column=3, row=3, sticky='w', padx=2, pady=2)
+        self.gross_profit_formula_entry.grid(column=4, row=3, padx=2, pady=2, sticky='ew')
+        self.gross_profit_formula_button.grid(column=5, row=3, padx=2, pady=2)
 
     def setup_bindings(self):
         self.formula_string_var.trace('w', self.handle_formula_change_event)
