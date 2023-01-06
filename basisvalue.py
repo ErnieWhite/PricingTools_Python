@@ -1,9 +1,11 @@
+import re
 import tkinter as tk
 from tkinter import ttk
-import utility
-import pyperclip
-import re
+
 import beepy
+import pyperclip
+
+import utility
 
 
 class BasisValue(ttk.Frame):

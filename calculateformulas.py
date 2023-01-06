@@ -1,8 +1,10 @@
 import tkinter as tk
 from tkinter import ttk
-import utility
-import pyperclip
+
 import beepy
+import pyperclip
+
+import utility
 
 
 class CalculateFormulas(ttk.Frame):

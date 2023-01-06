@@ -1,8 +1,9 @@
+import re
 import tkinter as tk
 from tkinter import ttk
-import re
-import pyperclip
+
 import beepy
+import pyperclip
 
 import utility
 

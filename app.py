@@ -2,8 +2,8 @@ import tkinter as tk
 
 import adjustformula
 import basisvalue
-import convertformula
 import calculateformulas
+import convertformula
 
 
 class App(tk.Tk):
