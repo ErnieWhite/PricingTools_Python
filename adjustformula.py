@@ -49,7 +49,6 @@ class AdjustFormula(ttk.Frame):
         self.configure_widgets()
 
     def configure_widgets(self) -> None:
-
         item_list = ("Auto", "1", "2", "3", "4", "5", "6")
 
         # create the entry widgets

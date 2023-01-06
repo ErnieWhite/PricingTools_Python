@@ -15,7 +15,7 @@ class ConvertFormula(ttk.Frame):
         self.title = 'Convert Formula'
 
         self.vcmd = (self.register(self.validate), '%P')
-        self.ivcmd = (self.register(self.on_invalid), )
+        self.ivcmd = (self.register(self.on_invalid),)
 
         # create the StringVars
         self.formula_string_var = tk.StringVar()
@@ -115,7 +115,6 @@ class ConvertFormula(ttk.Frame):
         self.clear_calculated_formulas()
 
         if utility.valid_formula(value):
-
             multiplier = utility.calculate_multiplier(value)
 
             formula = utility.find_multiplier_formula(multiplier, decimals)

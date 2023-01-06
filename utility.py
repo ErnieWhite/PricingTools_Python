@@ -51,17 +51,17 @@ def find_multiplier_formula(multiplier, decimals):
 
 def find_markup_formula(multiplier, decimals):
     specifier = create_specifier(decimals)
-    return f'D{1/multiplier:{specifier}}'
+    return f'D{1 / multiplier:{specifier}}'
 
 
 def find_discount_formula(multiplier, decimals):
     specifier = create_specifier(decimals)
-    return f'{(multiplier - 1)*100:+{specifier}}'
+    return f'{(multiplier - 1) * 100:+{specifier}}'
 
 
 def find_gross_profit_formula(multiplier, decimals):
     specifier = create_specifier(decimals)
-    numeric_part = float(f'{(1-1/multiplier) * 100:.6}')
+    numeric_part = float(f'{(1 - 1 / multiplier) * 100:.6}')
     return f'GP{numeric_part:{specifier}}' if numeric_part < 100 else ''
 
 

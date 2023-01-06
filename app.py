@@ -26,28 +26,12 @@ class App(tk.Tk):
         self.config(menu=menubar)
 
         view_menu = tk.Menu(menubar, tearoff=False)
-        view_menu.add_command(
-            label=App.FIND_BASIS,
-            command=self.load_find_basis_value_frame,
-        )
-        view_menu.add_command(
-            label=App.CALCULATE_FORMULA,
-            command=self.load_find_formulas_frame,
-        )
-        view_menu.add_command(
-            label=App.CONVERT_FORMULA,
-            command=self.load_formula_converter_frame,
-        )
-        view_menu.add_command(
-            label=App.ADJUST_FORMULA,
-            command=self.load_adjust_formula_frame,
-        )
+        view_menu.add_command( label=App.FIND_BASIS, command=self.load_find_basis_value_frame)
+        view_menu.add_command( label=App.CALCULATE_FORMULA, command=self.load_find_formulas_frame)
+        view_menu.add_command( label=App.CONVERT_FORMULA, command=self.load_formula_converter_frame)
+        view_menu.add_command( label=App.ADJUST_FORMULA, command=self.load_adjust_formula_frame)
 
-        menubar.add_cascade(
-            label='View',
-            menu=view_menu,
-            underline=0
-        )
+        menubar.add_cascade( label='View', menu=view_menu, underline=0)
 
         self.load_formula_converter_frame()
 

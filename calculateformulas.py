@@ -61,10 +61,12 @@ class CalculateFormulas(ttk.Frame):
         self.markup_formula_display.configure(textvariable=self.markup_var, state='readonly')
         self.gross_profit_formula_display.configure(textvariable=self.gross_profit_var, state='readonly')
 
-        self.multiplier_formula_copy_button.configure(text='Copy', command=lambda: self.copy_formula(self.multiplier_var))
+        self.multiplier_formula_copy_button.configure(text='Copy',
+                                                      command=lambda: self.copy_formula(self.multiplier_var))
         self.discount_formula_copy_button.configure(text='Copy', command=lambda: self.copy_formula(self.discount_var))
         self.markup_formula_copy_button.configure(text='Copy', command=lambda: self.copy_formula(self.markup_var))
-        self.gross_profit_formula_copy_button.configure(text='Copy', command=lambda: self.copy_formula(self.gross_profit_var))
+        self.gross_profit_formula_copy_button.configure(text='Copy',
+                                                        command=lambda: self.copy_formula(self.gross_profit_var))
 
     def place_widgets(self):
         label_options = {'sticky': tk.W, 'padx': 2, 'pady': 2}

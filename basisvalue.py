@@ -18,7 +18,7 @@ class BasisValue(ttk.Frame):
         # Set up data validation call backs
         self.float_vcmd = (self.register(self.validate_float), '%P')
         self.formula_vcmd = (self.register(self.validate_formula), '%P')
-        self.ivcmd = (self.register(self.on_invalid), )
+        self.ivcmd = (self.register(self.on_invalid),)
 
         self.unit_price_var = tk.StringVar()
         self.formula_var = tk.StringVar()
