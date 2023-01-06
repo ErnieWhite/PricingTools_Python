@@ -2,22 +2,19 @@ import tkinter as tk
 from tkinter import ttk
 import re
 import pyperclip
+import beepy
 
 import utility
 
 
 class ConvertFormula(ttk.Frame):
     def __init__(self, container):
-        """
-
-        :param container:
-        """
         super().__init__(container)
 
         self.title = 'Convert Formula'
 
-        vcmd = (self.register(self.validate), '%P')
-        ivcmd = (self.register(self.on_invalid),)
+        self.vcmd = (self.register(self.validate), '%P')
+        self.ivcmd = (self.register(self.on_invalid), )
 
         # create the StringVars
         self.formula_string_var = tk.StringVar()
@@ -27,117 +24,123 @@ class ConvertFormula(ttk.Frame):
         self.markup_var = tk.StringVar()
         self.gross_profit_var = tk.StringVar()
 
-        # create the separator
-        self.separator = ttk.Separator(self, orient=tk.VERTICAL)
-
         # create the entries
-        self.current_formula_entry = ttk.Entry(
-            self,
-            validate='key',
-            textvariable=self.formula_string_var,
-            validatecommand=vcmd,
-            invalidcommand=ivcmd,
-        )
-        self.multiplier_formula_entry = ttk.Entry(self, textvariable=self.multiplier_var, state='readonly', takefocus=False)
-        self.discount_formula_entry = ttk.Entry(self, textvariable=self.discount_var, state='readonly', takefocus=False)
-        self.markup_formula_entry = ttk.Entry(self, textvariable=self.markup_var, state='readonly', takefocus=False)
-        self.gross_profit_formula_entry = ttk.Entry(self, textvariable=self.gross_profit_var, state='readonly', takefocus=False)
+        self.current_formula_entry = ttk.Entry(self)
+        self.multiplier_formula_display = ttk.Entry(self)
+        self.discount_formula_display = ttk.Entry(self)
+        self.markup_formula_display = ttk.Entry(self)
+        self.gross_profit_formula_display = ttk.Entry(self)
 
         # create the combobox
+        self.decimals = ttk.Combobox(self)
+
+        # create the copy buttons
+        self.multiplier_copy_button = ttk.Button(self)
+        self.discount_copy_button = ttk.Button(self)
+        self.markup_copy_button = ttk.Button(self)
+        self.gross_profit_copy_button = ttk.Button(self)
+
+        self.configure_widgets()
+        self.place_widgets()
+        self.setup_bindings()
+
+    def configure_widgets(self):
+
         combo_items = ('Auto', '0', '1', '2', '3', '4', '5', '6')
-        self.decimals = ttk.Combobox(self, values=combo_items, state='readonly', textvariable=self.decimals_var)
+
+        entry_options = {'validate': 'key', 'validatecommand': self.vcmd, 'invalidcommand': self.ivcmd}
+        display_options = {'state': 'readonly', 'takefocus': False}
+        combobox_options = {'values': combo_items, 'state': 'readonly'}
+
+        self.current_formula_entry.configure(textvariable=self.formula_string_var, **entry_options)
+        self.multiplier_formula_display.configure(textvariable=self.multiplier_var, **display_options)
+        self.discount_formula_display.configure(textvariable=self.discount_var, **display_options)
+        self.markup_formula_display.configure(textvariable=self.markup_var, **display_options)
+        self.gross_profit_formula_display.configure(textvariable=self.gross_profit_var, **display_options)
+
+        # create the combobox
+        self.decimals.configure(textvariable=self.decimals_var, **combobox_options)
         self.decimals.current(0)
 
         # create the copy buttons
         # TODO: Replace the text with an image
-        self.multiplier_formula_button = ttk.Button(
-            self,
-            text="Copy",
-            command=lambda: self.copy_formula(self.multiplier_var),
-        )
-        self.discount_formula_button = ttk.Button(
-            self,
-            text="Copy",
-            command=lambda: self.copy_formula(self.discount_var),
-        )
-        self.markup_formula_button = ttk.Button(
-            self,
-            text="Copy",
-            command=lambda: self.copy_formula(self.markup_var),
-        )
-        self.gross_profit_formula_button = ttk.Button(
-            self,
-            text="Copy",
-            command=lambda: self.copy_formula(self.gross_profit_var),
-        )
+        self.multiplier_copy_button.configure(text="Copy", command=lambda: self.copy_formula(self.multiplier_var))
+        self.discount_copy_button.configure(text="Copy", command=lambda: self.copy_formula(self.discount_var))
+        self.markup_copy_button.configure(text="Copy", command=lambda: self.copy_formula(self.markup_var))
+        self.gross_profit_copy_button.configure(text="Copy", command=lambda: self.copy_formula(self.gross_profit_var))
 
-        self.place_widgets()
-        self.setup_bindings()
+    def place_widgets(self) -> None:
 
-    def place_widgets(self):
+        label_options = {'sticky': tk.W, 'padx': 2, 'pady': 2}
+        entry_options = {'sticky': tk.EW, 'padx': 2, 'pady': 2}
+        combobox_options = {'sticky': tk.EW, 'padx': 2, 'pady': 2}
+        separator_options = {'rowspan': 4, 'sticky': tk.NS, 'padx': 2, 'pady': 2}
+        display_options = {'sticky': tk.EW, 'padx': 2, 'pady': 2}
+        button_options = {'padx': 2, 'pady': 2}
 
-        # place the formula widgets
-        ttk.Label(self, text='Formula').grid(column=0, row=0, sticky='w', padx=2, pady=2)
-        self.current_formula_entry.grid(column=1, row=0, padx=2, pady=2, sticky='ew')
+        ttk.Label(self, text='Formula').grid(column=0, row=0, **label_options)
+        ttk.Label(self, text='Decimals').grid(column=0, row=1, **label_options)
 
-        ttk.Label(self, text='Decimals').grid(column=0, row=1, sticky='w', padx=2, pady=2)
-        self.decimals.grid(column=1, row=1, padx=2, pady=2, sticky='ew')
-        # self.decimals.current(0)
+        self.current_formula_entry.grid(column=1, row=0, **entry_options)
 
-        # place the separator
-        self.separator.grid(column=2, row=0, rowspan=6, pady=5, sticky='ns')
+        self.decimals.grid(column=1, row=1, **combobox_options)
 
-        # place the multiplier widgets
-        ttk.Label(self, text='Multiplier').grid(column=3, row=0, sticky='w', padx=2, pady=2)
-        self.multiplier_formula_entry.grid(column=4, row=0, padx=2, pady=2, sticky='ew')
-        self.multiplier_formula_button.grid(column=5, row=0, padx=2, pady=2)
+        ttk.Separator(self, orient=tk.VERTICAL).grid(column=2, row=0, **separator_options)
 
-        # place the discount widgets
-        ttk.Label(self, text='Discount').grid(column=3, row=1, sticky='w', padx=2, pady=2)
-        self.discount_formula_entry.grid(column=4, row=1, padx=2, pady=2, sticky='ew')
-        self.discount_formula_button.grid(column=5, row=1, padx=2, pady=2)
+        ttk.Label(self, text='Multiplier').grid(column=3, row=0, **label_options)
+        ttk.Label(self, text='Discount').grid(column=3, row=1, **label_options)
+        ttk.Label(self, text='Markup').grid(column=3, row=2, **label_options)
+        ttk.Label(self, text='Gross Profit').grid(column=3, row=3, **label_options)
 
-        # place the markup widget
-        ttk.Label(self, text='Markup').grid(column=3, row=2, sticky='w', padx=2, pady=2)
-        self.markup_formula_entry.grid(column=4, row=2, padx=2, pady=2, sticky='ew')
-        self.markup_formula_button.grid(column=5, row=2, padx=2, pady=2)
+        self.multiplier_formula_display.grid(column=4, row=0, **display_options)
+        self.discount_formula_display.grid(column=4, row=1, **display_options)
+        self.markup_formula_display.grid(column=4, row=2, **display_options)
+        self.gross_profit_formula_display.grid(column=4, row=3, **display_options)
 
-        # place the gross profit widgets
-        ttk.Label(self, text='Gross Profit').grid(column=3, row=3, sticky='w', padx=2, pady=2)
-        self.gross_profit_formula_entry.grid(column=4, row=3, padx=2, pady=2, sticky='ew')
-        self.gross_profit_formula_button.grid(column=5, row=3, padx=2, pady=2)
+        self.multiplier_copy_button.grid(column=5, row=0, **button_options)
+        self.discount_copy_button.grid(column=5, row=1, **button_options)
+        self.markup_copy_button.grid(column=5, row=2, **button_options)
+        self.gross_profit_copy_button.grid(column=5, row=3, **button_options)
 
-    def setup_bindings(self):
+    def setup_bindings(self) -> None:
         self.formula_string_var.trace_add('write', self.handle_formula_change_event)
         self.decimals_var.trace_add('write', self.handle_formula_change_event)
 
-    def handle_formula_change_event(self, *_):
-        value = self.formula_string_var.get()
-        value = value.upper()
+    def handle_formula_change_event(self, *_) -> None:
+        value = self.formula_string_var.get().upper()
         decimals = self.decimals_var.get()
+
         self.formula_string_var.set(value)
-
         self.clear_calculated_formulas()
-        if utility.valid_formula(value):
-            multiplier = utility.calculate_multiplier(value)
-            self.multiplier_var.set(utility.find_multiplier_formula(multiplier, decimals))
-            self.discount_var.set(utility.find_discount_formula(multiplier, decimals))
-            self.markup_var.set(utility.find_markup_formula(multiplier, decimals))
-            self.gross_profit_var.set(utility.find_gross_profit_formula(multiplier, decimals))
 
-    def clear_calculated_formulas(self):
+        if utility.valid_formula(value):
+
+            multiplier = utility.calculate_multiplier(value)
+
+            formula = utility.find_multiplier_formula(multiplier, decimals)
+            self.multiplier_var.set(formula)
+
+            formula = utility.find_discount_formula(multiplier, decimals)
+            self.discount_var.set(formula)
+
+            formula = utility.find_markup_formula(multiplier, decimals)
+            self.markup_var.set(formula)
+
+            formula = utility.find_gross_profit_formula(multiplier, decimals)
+            self.gross_profit_var.set(formula)
+
+    def clear_calculated_formulas(self) -> None:
         self.multiplier_var.set('')
         self.discount_var.set('')
         self.markup_var.set('')
         self.gross_profit_var.set('')
 
     @staticmethod
-    def copy_formula(string_var):
-        pyperclip.copy(string_var.get())
+    def copy_formula(var: tk.StringVar) -> None:
+        pyperclip.copy(var.get())
 
     @staticmethod
-    def validate(value) -> bool:
-        print('validate')
+    def validate(value: str) -> bool:
         if value == '':
             return True
         value = value.upper()
@@ -150,8 +153,8 @@ class ConvertFormula(ttk.Frame):
         return False
 
     @staticmethod
-    def on_invalid():
-        print('on invalid')
+    def on_invalid() -> None:
+        beepy.beep(sound=1)
 
 
 if __name__ == '__main__':
