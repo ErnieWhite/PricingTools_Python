@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-
+import re
 import beepy
 import pyperclip
 
@@ -127,13 +127,9 @@ class CalculateFormulas(ttk.Frame):
 
     @staticmethod
     def validate(value) -> bool:
-        if value == '':
+        if re.search(r'^[-+]?\d*\.?\d*$', value):
             return True
-        try:
-            float(value)
-            return True
-        except ValueError:
-            return False
+        return False
 
     @staticmethod
     def copy_formula(var: tk.StringVar) -> None:
