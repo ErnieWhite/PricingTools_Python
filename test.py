@@ -21,7 +21,7 @@ class UtilityTest(unittest.TestCase):
     def test_formula_no_decimal(self):
         self.assertTrue(valid_formula('*1'))
 
-    def test_formula_just_astrick(self):
+    def test_formula_just_asterisk(self):
         self.assertFalse(valid_formula('*'))
 
     def test_formula_two_decimals(self):
@@ -34,4 +34,3 @@ class UtilityTest(unittest.TestCase):
     def test_none_formula(self):
         formula = None
         self.assertFalse(valid_formula(formula))
-
