@@ -1,3 +1,6 @@
+import constants
+
+
 def calculate_multiplier(formula: str) -> float:
     """
     Converts a string formula to a float multiplier
@@ -36,22 +39,40 @@ def calculate_multiplier(formula: str) -> float:
     raise ValueError(f'{formula} is not a valid formula')
 
 
-def find_multiplier_formula(multiplier):
-    return f'*{multiplier:.6}'
+def find_multiplier_formula(multiplier, decimals):
+    if decimals == 'Auto':
+        return f'*{multiplier}'
+    else:
+        return f'*{multiplier:0.{int(decimals)}f}'
 
 
-def find_markup_formula(multiplier):
-    return f'D{1/multiplier:.6}'
+def find_markup_formula(multiplier, decimals):
+    if decimals == 'Auto':
+        return f'D{1/multiplier}'
+    else:
+        return f'D{1/multiplier:0.{int(decimals)}f}'
 
 
-def find_discount_formula(multiplier):
-    return f'{(multiplier - 1)*100:+.6}'
+def find_discount_formula(multiplier, decimals):
+
+    if decimals == 'Auto':
+        return f'{(multiplier - 1)*100:+}'
+    else:
+        temp1 = (multiplier - 1)
+        temp2 = temp1 * 100
+        temp3 = int(decimals)
+        temp4 = f'{temp2:+0.{temp3}f}'
+        return f'{temp4}'
 
 
-def find_gross_profit_formula(multiplier):
+def find_gross_profit_formula(multiplier, decimals):
     # was having problems with different values from the f-string and rounding the number
-    numeric_part = float(f'{(1-1/multiplier) * 100:.6}')
-    return f'GP{numeric_part:.6}' if numeric_part < 100 else ''
+
+    numeric_part = (1-1/multiplier) * 100
+    if decimals == 'Auto':
+        return f'GP{numeric_part}' if abs(numeric_part) < 100 else ''
+    else:
+        return f'GP{numeric_part:0.{int(decimals)}f}' if abs(numeric_part) < 100 else ''
 
 
 def valid_formula(formula):
@@ -76,3 +97,15 @@ def valid_formula(formula):
         except ValueError:
             return False
     return False
+
+
+def smallestMultiplier(basis, unit):
+    decimals = constants.MAX_DECIMALS
+    while decimals >= 0:
+        multiplier = round(unit / basis, decimals)
+        if round(basis * multiplier, 3) != unit:
+            break
+        else:
+            decimals = decimals - 1
+    multiplier = round(unit / basis, decimals + 1)
+    return multiplier

@@ -3,6 +3,7 @@ from tkinter import ttk
 import utility
 import pyperclip
 import re
+from constants import *
 
 
 class FindBasisValueFrame(ttk.Frame):
@@ -19,12 +20,21 @@ class FindBasisValueFrame(ttk.Frame):
         self.formula_var = tk.StringVar()
         self.basis_price_var = tk.StringVar()
 
-        # create the widgets
-        self.unit_price_label = ttk.Label(self, text='Unit Price')
-        self.formula_label = ttk.Label(self, text='Formula')
-        self.calculated_basis_label = ttk.Label(self, text='Basis Value')
-        self.copy_button = ttk.Button(self, text='Copy', command=self.copy_basis_price)
+        self.copy_button = ttk.Button(self)
+        self.unit_price_entry = ttk.Entry(self)
+        self.formula_entry = ttk.Entry(self)
+        self.calculated_basis_entry = ttk.Entry(self)
 
+        self.configure_widgets(float_vcmd, formula_vcmd, ivcmd)
+        self.place_widgets()
+        self.setup_traces()
+
+    def setup_traces(self):
+        self.unit_price_var.trace_add('write', self.update_basis_price)
+        self.formula_var.trace_add('write', self.update_basis_price)
+
+    def configure_widgets(self, float_vcmd, formula_vcmd, ivcmd):
+        self.copy_button = ttk.Button(self, text='Copy', command=self.copy_basis_price)
         self.unit_price_entry = ttk.Entry(
             self,
             textvariable=self.unit_price_var,
@@ -39,20 +49,24 @@ class FindBasisValueFrame(ttk.Frame):
             validatecommand=formula_vcmd,
             invalidcommand=ivcmd,
         )
-        self.calculated_basis_entry = ttk.Entry(self, state='readonly', textvariable=self.basis_price_var)
+        self.calculated_basis_entry = ttk.Entry(
+            self,
+            state='readonly',
+            textvariable=self.basis_price_var
+        )
 
-        self.unit_price_label.grid(row=0, column=0, sticky='w')
-        self.unit_price_entry.grid(row=0, column=1, sticky='we')
+    def place_widgets(self):
+        ttk.Label(self, text=UNIT_PRICE).grid(row=0, column=0, sticky=tk.W)
+        self.unit_price_entry.grid(row=0, column=1, sticky=tk.EW)
 
-        self.formula_label.grid(row=1, column=0, sticky='w')
-        self.formula_entry.grid(row=1, column=1, sticky='we')
+        ttk.Label(self, text=FORMULA).grid(row=1, column=0, sticky=tk.W)
+        self.formula_entry.grid(row=1, column=1, sticky=tk.EW)
 
-        self.calculated_basis_label.grid(row=2, column=0, sticky='w')
-        self.calculated_basis_entry.grid(row=2, column=1, sticky='we')
-        self.copy_button.grid(row=3, column=1, sticky='we')
+        ttk.Separator(self, orient=tk.VERTICAL).grid(row=0, column=2, rowspan=3, padx=5, sticky=tk.NS)
 
-        self.unit_price_var.trace_add('write', self.update_basis_price)
-        self.formula_var.trace_add('write', self.update_basis_price)
+        ttk.Label(self, text=BASIS_VALUE).grid(row=0, column=4, sticky=tk.W)
+        self.calculated_basis_entry.grid(row=0, column=5, sticky=tk.EW)
+        self.copy_button.grid(row=0, column=6, sticky=tk.EW)
 
     @staticmethod
     def validate_float(value):
@@ -66,7 +80,6 @@ class FindBasisValueFrame(ttk.Frame):
 
     @staticmethod
     def validate_formula(value):
-        print(f'validate: formula {value}')
         if value == '':
             return True
         value = value.upper()
@@ -78,8 +91,7 @@ class FindBasisValueFrame(ttk.Frame):
             return True
         return False
 
-    def update_basis_price(self, *args):
-        print('update basis price')
+    def update_basis_price(self, *_):
         self.formula_var.set(self.formula_var.get().upper())
         if not utility.valid_formula(self.formula_var.get()):
             self.clear_basis()
@@ -87,11 +99,12 @@ class FindBasisValueFrame(ttk.Frame):
         if self.unit_price_var.get() == '' or self.formula_var.get() == '':
             self.clear_basis()
             return
-        self.multiplier = utility.calculate_multiplier(self.formula_var.get())
+        multiplier = utility.calculate_multiplier(self.formula_var.get())
         if self.multiplier == 0:
             self.clear_basis()
             return
-        self.basis_price_var.set(str(float(self.unit_price_var.get()) / self.multiplier))
+        basis = float(self.unit_price_var.get()) / multiplier
+        self.basis_price_var.set(f'{basis:.3}')
 
     def clear_basis(self):
         self.basis_price_var.set('')
@@ -106,7 +119,7 @@ class FindBasisValueFrame(ttk.Frame):
 if __name__ == '__main__':
     app = tk.Tk()
 
-    app.title('Find Basis Value')
+    app.title(FIND_BASIS_VALUE)
 
     frame = FindBasisValueFrame(app)
     frame.pack()

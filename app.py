@@ -4,6 +4,8 @@ import findbasisvalueframe
 import formulaconverterframe
 import findformulasframe
 
+from constants import *
+
 
 class App(tk.Tk):
     def __init__(self) -> None:
@@ -20,15 +22,15 @@ class App(tk.Tk):
 
         view_menu = tk.Menu(menubar, tearoff=False)
         view_menu.add_command(
-            label='Find Basis Value',
+            label=FIND_BASIS_VALUE,
             command=self.load_find_basis_value_frame,
         )
         view_menu.add_command(
-            label='Find Formulas',
+            label=FIND_FORMULAS,
             command=self.load_find_formulas_frame,
         )
         view_menu.add_command(
-            label='Formula Converter',
+            label=FORMULA_CONVERTER,
             command=self.load_formula_converter_frame,
         )
 
@@ -38,28 +40,28 @@ class App(tk.Tk):
             underline=0
         )
 
-        self.load_formula_converter_frame()
+        self.load_find_formulas_frame()
 
     def load_find_formulas_frame(self):
         if self.current_frame is not None:
             self.current_frame.forget()
         self.current_frame = self.find_formulas_frame
         self.current_frame.pack(padx=10, pady=10)
-        self.title('Pricing Tool - Unit Basis')
+        self.title(APPLICATION_TITLE + " - " + FIND_FORMULAS)
 
     def load_find_basis_value_frame(self):
         if self.current_frame is not None:
             self.current_frame.forget()
         self.current_frame = self.find_basis_value_frame
         self.current_frame.pack(padx=10, pady=10)
-        self.title('Pricing Tool - Unit Formula')
+        self.title(APPLICATION_TITLE + " - " + FIND_BASIS_VALUE)
 
     def load_formula_converter_frame(self):
         if self.current_frame is not None:
             self.current_frame.forget()
         self.current_frame = self.formula_converter_frame
         self.current_frame.pack(padx=10, pady=10)
-        self.title('Pricing Tool - Formula Converter')
+        self.title(APPLICATION_TITLE + " - " + FORMULA_CONVERTER)
 
 
 if __name__ == '__main__':
