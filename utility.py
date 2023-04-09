@@ -1,3 +1,6 @@
+import constants
+
+
 def calculate_multiplier(formula: str) -> float:
     """
     Converts a string formula to a float multiplier
@@ -25,7 +28,7 @@ def calculate_multiplier(formula: str) -> float:
         number = float(formula[2:])
         # GP100 is not a valid formula in eclipse
         if number > 99.99:
-            raise ValueError(f'GP CalculateFormulas must be below 100: {formula}')
+            raise ValueError(f'GP Formulas must be below 100: {formula}')
         multiplier = 1 / (1 - float(formula[2:]) / 100)
         return multiplier
 
@@ -36,33 +39,40 @@ def calculate_multiplier(formula: str) -> float:
     raise ValueError(f'{formula} is not a valid formula')
 
 
-def create_specifier(decimals):
-    if decimals == 'Auto':
-        specifier = ''
-    else:
-        specifier = f'.0{decimals}f'
-    return specifier
-
-
 def find_multiplier_formula(multiplier, decimals):
-    specifier = create_specifier(decimals)
-    return f'*{multiplier:{specifier}}'
+    if decimals == 'Auto':
+        return f'*{multiplier}'
+    else:
+        return f'*{multiplier:0.{int(decimals)}f}'
 
 
 def find_markup_formula(multiplier, decimals):
-    specifier = create_specifier(decimals)
-    return f'D{1 / multiplier:{specifier}}'
+    if decimals == 'Auto':
+        return f'D{1/multiplier}'
+    else:
+        return f'D{1/multiplier:0.{int(decimals)}f}'
 
 
 def find_discount_formula(multiplier, decimals):
-    specifier = create_specifier(decimals)
-    return f'{(multiplier - 1) * 100:+{specifier}}'
+
+    if decimals == 'Auto':
+        return f'{(multiplier - 1)*100:+}'
+    else:
+        temp1 = (multiplier - 1)
+        temp2 = temp1 * 100
+        temp3 = int(decimals)
+        temp4 = f'{temp2:+0.{temp3}f}'
+        return f'{temp4}'
 
 
 def find_gross_profit_formula(multiplier, decimals):
-    specifier = create_specifier(decimals)
-    numeric_part = float(f'{(1 - 1 / multiplier) * 100:.6}')
-    return f'GP{numeric_part:{specifier}}' if numeric_part < 100 else ''
+    # was having problems with different values from the f-string and rounding the number
+
+    numeric_part = (1-1/multiplier) * 100
+    if decimals == 'Auto':
+        return f'GP{numeric_part}' if abs(numeric_part) < 100 else ''
+    else:
+        return f'GP{numeric_part:0.{int(decimals)}f}' if abs(numeric_part) < 100 else ''
 
 
 def valid_formula(formula):
@@ -87,3 +97,15 @@ def valid_formula(formula):
         except ValueError:
             return False
     return False
+
+
+def smallestMultiplier(basis, unit):
+    decimals = constants.MAX_DECIMALS
+    while decimals >= 0:
+        multiplier = round(unit / basis, decimals)
+        if round(basis * multiplier, 3) != unit:
+            break
+        else:
+            decimals = decimals - 1
+    multiplier = round(unit / basis, decimals + 1)
+    return multiplier
