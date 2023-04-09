@@ -141,7 +141,7 @@ class FindFormulaFrame(ttk.Frame):
         unit_price = float(self.unit_price_var.get())
         basis_value = float(self.basis_value_var.get())
         if decimals == 'Auto':
-            multiplier = utility.smallestMultiplier(basis_value, unit_price)
+            multiplier = utility.smallest_multiplier(basis_value, unit_price)
         else:
             multiplier = unit_price / basis_value
 

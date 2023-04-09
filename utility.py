@@ -99,7 +99,7 @@ def valid_formula(formula):
     return False
 
 
-def smallestMultiplier(basis, unit):
+def smallest_multiplier(basis, unit):
     decimals = constants.MAX_DECIMALS
     while decimals >= 0:
         multiplier = round(unit / basis, decimals)

@@ -56,10 +56,10 @@ class CalculateFormulas(ttk.Frame):
         self.decimals_combo.configure(values=combo_items, textvariable=self.decimals_var, state='readonly', )
         self.decimals_combo.current(0)
 
-        self.multiplier_formula_display.configure(textvariable=self.multiplier_var, state='readonly')
-        self.discount_formula_display.configure(textvariable=self.discount_var, state='readonly')
-        self.markup_formula_display.configure(textvariable=self.markup_var, state='readonly')
-        self.gross_profit_formula_display.configure(textvariable=self.gross_profit_var, state='readonly')
+        self.multiplier_formula_display.configure(textvariable=self.multiplier_var, state='readonly', takefocus=False)
+        self.discount_formula_display.configure(textvariable=self.discount_var, state='readonly', takefocus=False)
+        self.markup_formula_display.configure(textvariable=self.markup_var, state='readonly', takefocus=False)
+        self.gross_profit_formula_display.configure(textvariable=self.gross_profit_var, state='readonly', takefocus=False)
 
         self.multiplier_formula_copy_button.configure(text='Copy',
                                                       command=lambda: self.copy_formula(self.multiplier_var))

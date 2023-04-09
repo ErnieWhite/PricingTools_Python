@@ -56,7 +56,8 @@ class BasisValue(ttk.Frame):
 
         self.calculated_basis_entry.configure(
             state='readonly',
-            textvariable=self.basis_price_var
+            textvariable=self.basis_price_var,
+            takefocus=False,
         )
 
         combo_values = ('Auto', '0', '1', '2', '3', '4')
